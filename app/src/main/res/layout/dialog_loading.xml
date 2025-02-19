@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:indicatorSize="48dp"
+        app:indicatorColor="@color/material_dynamic_primary0"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uploading election positions..."
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:paddingTop="16dp"/>
+</LinearLayout>

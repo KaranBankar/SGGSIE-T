@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#F3F5FF"
+    android:padding="24dp">
+
+    <!-- College Logo -->
+    <ImageView
+        android:id="@+id/imgCollegeLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/app_logo"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="College Logo"/>
+
+    <!-- College Name -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SGGSIE&amp;T"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Subheading -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Sign in To Continue"
+        android:textSize="14sp"
+
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Dropdown (Login Type) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:endIconMode="dropdown_menu">
+        <AutoCompleteTextView
+            android:id="@+id/spinnerLoginType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Select your login type"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Email Input -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Email"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your email"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- OTP Input -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter OTP"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconMode="password_toggle">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter OTP"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Privacy Policy Checkbox -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+        <CheckBox
+            android:id="@+id/checkBoxPrivacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept Privacy and Policy"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+
+    <!-- Login Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login Now"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Get OTP Button -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvGetOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Otp"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+    <!-- Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/app_logo"
+            android:contentDescription="Info"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Only Administration, Faculty, and Students of SGGSIE&amp;T College can log in"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

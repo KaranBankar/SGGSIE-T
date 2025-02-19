@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground"
+    tools:context=".DisplayElectionPositions">
+
+    <!-- Title -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Election Positions"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp"/>
+
+    <!-- RecyclerView for displaying positions -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPositions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <!-- Add Position Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Position"
+        app:cornerRadius="16dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Post Positions Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPostPositions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Positions"
+        app:cornerRadius="16dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_marginTop="12dp"/>
+
+</LinearLayout>
