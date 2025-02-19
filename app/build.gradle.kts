@@ -62,4 +62,5 @@ dependencies {
 
     // MPAndroidChart Library (Fixed Version Format)
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
+    implementation("com.google.firebase:firebase-storage:19.2.2")
 }

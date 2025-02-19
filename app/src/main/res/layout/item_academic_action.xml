@@ -116,6 +116,7 @@ app:cardElevation="8dp">
 android:layout_width="0dp"
 android:layout_height="120dp"
 android:layout_columnWeight="1"
+    android:id="@+id/addalldata"
 android:layout_margin="8dp"
 app:cardCornerRadius="16dp"
 app:cardElevation="8dp">
@@ -135,7 +136,7 @@ app:cardElevation="8dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attendance"
+        android:text="Add Data"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
         android:textStyle="bold"/>
