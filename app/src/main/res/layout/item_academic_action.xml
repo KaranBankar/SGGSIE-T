@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="2"
+        android:orientation="horizontal"
+      >
+
+    <!-- CardView for Election -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+    android:layout_columnWeight="1"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:src="@drawable/user"
+    android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Election"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- CardView for Complaint -->
+<androidx.cardview.widget.CardView
+android:layout_width="0dp"
+android:layout_height="120dp"
+android:layout_columnWeight="1"
+android:layout_margin="8dp"
+app:cardCornerRadius="16dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complaint"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    <!-- CardView for Budget -->
+<androidx.cardview.widget.CardView
+android:layout_width="0dp"
+android:layout_height="120dp"
+android:layout_columnWeight="1"
+android:layout_margin="8dp"
+app:cardCornerRadius="16dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Budget"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    <!-- CardView for Attendance -->
+<androidx.cardview.widget.CardView
+android:layout_width="0dp"
+android:layout_height="120dp"
+android:layout_columnWeight="1"
+android:layout_margin="8dp"
+app:cardCornerRadius="16dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attendance"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    <!-- CardView for Leave Requests -->
+<androidx.cardview.widget.CardView
+android:layout_width="0dp"
+android:layout_height="120dp"
+android:layout_columnWeight="1"
+android:layout_margin="8dp"
+app:cardCornerRadius="16dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Requests"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    <!-- CardView for Facility Usage -->
+<androidx.cardview.widget.CardView
+android:layout_width="0dp"
+android:layout_height="120dp"
+android:layout_columnWeight="1"
+android:layout_margin="8dp"
+app:cardCornerRadius="16dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Facility Usage"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    </GridLayout>
+    </LinearLayout>

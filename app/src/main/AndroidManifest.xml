@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +21,15 @@
             android:exported="false" />
         <activity
             android:name=".DisplayElectionPositions"
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".AdminModule.PrincipalDashboard"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>

@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_blue">#f0f8ff</color>
+    <color name="primary_blue">#3050fe</color>
+    <color name="text_primary">#00137d</color>
+    <color name="text_secondary">#666666</color>
+    <color name="complaint_bg">#ede1d0</color>
+
+    <color name="icon_bg">#E3E8FF</color>
 </resources>

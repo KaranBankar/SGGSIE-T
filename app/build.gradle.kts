@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-   // id("com.android.application")
     id("com.google.gms.google-services")
 }
 
@@ -38,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -49,15 +47,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("androidx.core:core:1.15.0")
-    implementation("androidx.core:core-ktx:1.15.0")
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
+    // Firebase Dependencies (Add More If Needed)
     implementation("com.google.firebase:firebase-analytics")
 
+    // Circle ImageView Library
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // MPAndroidChart Library (Fixed Version Format)
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
 }
