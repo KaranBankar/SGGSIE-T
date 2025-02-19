@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sggsiet.AdminModule.PrincipalDashboard;
+import com.example.sggsiet.DocterModule.DocterDashboard;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -168,7 +169,7 @@ public class Login extends AppCompatActivity {
                 intent = new Intent(this, FacultyModuleActivity.class);
                 break;
             case "Doctor":
-                intent = new Intent(this, DisplayElectionPositions.class);
+                intent = new Intent(this, DocterDashboard.class);
                 break;
             default:
                 Toast.makeText(this, "Invalid User Type", Toast.LENGTH_SHORT).show();

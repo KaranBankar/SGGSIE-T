@@ -19,6 +19,12 @@
         android:theme="@style/Theme.SGGSIET"
         tools:targetApi="31">
         <activity
+            android:name=".DocterModule.ViewStudentReports"
+            android:exported="false" />
+        <activity
+            android:name=".DocterModule.AddStudentReport"
+            android:exported="false" />
+        <activity
             android:name=".DocterModule.DocterDashboard"
             android:exported="false" />
         <activity
@@ -32,7 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".FacultyModuleActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

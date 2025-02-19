@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sggsiet.AdminModule.PrincipalDashboard
+import com.example.sggsiet.DocterModule.DocterDashboard
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
                 when (userType) {
                     "Administration" -> startActivity(Intent(this, PrincipalDashboard::class.java))
                     "Faculty" -> startActivity(Intent(this, FacultyModuleActivity::class.java))
-                    "Doctor" -> startActivity(Intent(this, DisplayElectionPositions::class.java))
+                    "Doctor" -> startActivity(Intent(this, DocterDashboard::class.java))
                     else -> startActivity(Intent(this, Login::class.java))
                 }
             } else {
