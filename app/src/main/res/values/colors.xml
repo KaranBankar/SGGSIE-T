@@ -17,4 +17,7 @@
     <color name="primary">#193050FE</color>
 
     <color name="icon_bg">#E3E8FF</color>
+    <color name="green">#6EEA63</color>
+    <color name="ios_blue">#007AFF</color> <!-- iOS-style blue -->
+    <color name="ios_green">#34C759</color> <!-- iOS-style green -->
 </resources>
