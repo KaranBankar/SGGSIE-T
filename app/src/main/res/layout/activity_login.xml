@@ -6,6 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="#F3F5FF"
+    android:id="@+id/main"
     android:padding="24dp">
 
     <!-- College Logo -->
