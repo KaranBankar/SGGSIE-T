@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.sggsiet.AdminModule.PrincipalDashboard;
+
 import java.lang.annotation.ElementType;
 import java.util.Random;
 
@@ -116,10 +118,10 @@ public class Login extends AppCompatActivity {
         Intent intent;
         switch (userType) {
             case "Administration":
-                intent = new Intent(this, DisplayElectionPositions.class);
+                intent = new Intent(this, PrincipalDashboard.class);
                 break;
             case "Faculty":
-                intent = new Intent(this, DisplayElectionPositions.class);
+                intent = new Intent(this, FacultyModuleActivity.class);
                 break;
             case "Doctor":
                 intent = new Intent(this, DisplayElectionPositions.class);

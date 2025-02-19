@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
             if (isLoggedIn) {
                 when (userType) {
                     "Administration" -> startActivity(Intent(this, PrincipalDashboard::class.java))
-                    "Faculty" -> startActivity(Intent(this, DisplayElectionPositions::class.java))
+                    "Faculty" -> startActivity(Intent(this, FacultyModuleActivity::class.java))
                     "Doctor" -> startActivity(Intent(this, DisplayElectionPositions::class.java))
                     else -> startActivity(Intent(this, Login::class.java))
                 }
