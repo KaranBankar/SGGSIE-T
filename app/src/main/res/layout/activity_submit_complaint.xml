@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:background="@color/background_blue">
+
+    <!-- Top Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/ios_blue"
+        app:title="Submit Complaint"
+        app:titleTextColor="@android:color/black"
+        app:navigationIconTint="@color/primary_blue"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextAppearance="@style/ToolbarTitleStyle" />
+
+
+    <!-- Content ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Complaint Type -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Complaint Type"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:entries="@array/complaint_types" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter title" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter description"
+                    android:inputType="textMultiLine"
+                    android:minLines="4" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Upload Image -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Image"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose File"
+                android:id="@+id/choosefile"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:cornerRadius="20dp"
+                app:strokeColor="@color/ios_blue"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="16dp"
+                app:backgroundTint="@android:color/transparent"
+                android:textColor="@color/ios_blue" />
+            <ImageView
+                android:id="@+id/selected_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Submit Button -->
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:cornerRadius="24dp"
+                app:strokeColor="@color/ios_green"
+                app:strokeWidth="1dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@android:color/transparent"
+                android:textColor="@color/ios_green" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

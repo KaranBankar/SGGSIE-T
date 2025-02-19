@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.SGGSIET" parent="Base.Theme.SGGSIET" />
+    <style name="ToolbarTitleStyle">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
 </resources>

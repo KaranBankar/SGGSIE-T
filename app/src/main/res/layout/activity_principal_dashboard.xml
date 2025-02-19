@@ -150,7 +150,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          >
-         <include layout="@layout/item_academic_action">
+         <include layout="@layout/item_admin_action">
 
          </include>
      </androidx.cardview.widget.CardView>

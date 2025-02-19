@@ -2,11 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Optional: Only required if sending SMS -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
     <uses-feature
-        android:name="android.hardware.telephony"
+        android:name="android.hardware.camera"
         android:required="false" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Permissions for Image Selection -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,36 +25,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SGGSIET"
         tools:targetApi="31">
-        <activity
-            android:name=".AdminModule.ElectionModule"
-            android:exported="false" />
-        <activity
-            android:name=".DocterModule.DocterDashboard"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".DisplayElectionPositions"
-            android:exported="true" />
-        <activity
-            android:name=".AdminModule.PrincipalDashboard"
-            android:exported="true" />
-        <activity
-            android:name=".FacultyModuleActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".AdminModule.UploadData"
-            android:exported="true"></activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true">
+
+        <activity android:name=".SubmitComplaint" android:exported="false" />
+        <activity android:name=".AdminModule.LeavesManagement" android:exported="false" />
+        <activity android:name=".AdminModule.HomeComplaints" android:exported="false" />
+        <activity android:name=".AdminModule.FacilityRegistration" android:exported="false" />
+        <activity android:name=".AdminModule.BudgetOverview" android:exported="false" />
+        <activity android:name=".AdminModule.ElectionModule" android:exported="false" />
+        <activity android:name=".DocterModule.DocterDashboard" android:exported="false" />
+        <activity android:name=".Login" android:exported="false" />
+
+        <!-- Ensure exported="true" for activities that might be accessed externally -->
+        <activity android:name=".DisplayElectionPositions" android:exported="true" />
+        <activity android:name=".AdminModule.PrincipalDashboard" android:exported="true" />
+        <activity android:name=".FacultyModuleActivity" android:exported="true" />
+        <activity android:name=".AdminModule.UploadData" android:exported="true" />
+
+        <!-- Launcher Activity (Must be exported) -->
+        <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
