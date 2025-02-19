@@ -1,13 +1,17 @@
+package com.example.sggsiet.DocterModule;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.sggsiet.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -19,100 +23,149 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class AddComplaintActivity extends AppCompatActivity {
-    private TextInputEditText etStudentEmail, etHealthIssue, etDescription, etTreatment;
+public class AddStudentReport extends AppCompatActivity {
+
+    private TextInputEditText etStudentEmail, etHealthIssue, etDescription;
     private MaterialButton btnSubmitComplaint;
-    private FirebaseDatabase database;
     private DatabaseReference complaintsRef;
-    private FirebaseStorage storage;
-    private StorageReference studentDataRef;
+    private StorageReference csvStorageRef;
+    private ProgressDialog progressDialog;  // Progress Dialog for loading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_complaint);
+        setContentView(R.layout.activity_add_student_report);
 
         etStudentEmail = findViewById(R.id.etStudentEmail);
         etHealthIssue = findViewById(R.id.etHealthIssue);
         etDescription = findViewById(R.id.etDescription);
-        etTreatment = findViewById(R.id.etTreatment);
         btnSubmitComplaint = findViewById(R.id.btnSubmitComplaint);
 
-        database = FirebaseDatabase.getInstance();
-        complaintsRef = database.getReference("complaints");
-        storage = FirebaseStorage.getInstance();
-        studentDataRef = storage.getReference().child("uploads/dummy_student_data.csv");
+        complaintsRef = FirebaseDatabase.getInstance().getReference("SGGSIE&T").child("healthreports");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        btnSubmitComplaint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAndSubmitComplaint();
-            }
-        });
+        if (user != null) {
+            csvStorageRef = FirebaseStorage.getInstance().getReference("dummy_student_data.csv");
+        } else {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+        }
+
+        btnSubmitComplaint.setOnClickListener(v -> checkStudentAndSubmit());
     }
 
-    private void validateAndSubmitComplaint() {
-        final String email = etStudentEmail.getText().toString().trim();
-        if (email.isEmpty()) {
-            Toast.makeText(this, "Enter Student Email", Toast.LENGTH_SHORT).show();
+    private void checkStudentAndSubmit() {
+        String email = etStudentEmail.getText().toString().trim();
+        String healthIssue = etHealthIssue.getText().toString().trim();
+        String description = etDescription.getText().toString().trim();
+
+        if (email.isEmpty() || healthIssue.isEmpty() || description.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        studentDataRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+
+        // Show Progress Dialog while searching
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Searching Student...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        csvStorageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new java.io.ByteArrayInputStream(bytes)));
                 String line;
-                boolean studentExists = false;
-                String studentName = "", contact = "";
+                boolean found = false;
+                HashMap<String, String> studentDetails = new HashMap<>();
 
                 while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    if (data.length >= 3 && data[1].equals(email)) {
-                        studentExists = true;
-                        studentName = data[0];
-                        contact = data[2];
+                    String[] parts = line.split(",");
+                    if (parts.length < 8) continue;
+
+                    if (parts[2].equalsIgnoreCase(email)) {
+                        studentDetails.put("name", parts[1]);
+                        studentDetails.put("email", parts[2]);
+                        studentDetails.put("enrollmentno", parts[0]);
+                        studentDetails.put("department", parts[3]);
+                        studentDetails.put("year", parts[4]);
+                        studentDetails.put("mobile", parts[5]);
+                        studentDetails.put("emergencycontact", parts[6]);
+                        studentDetails.put("position", parts[7]);
+                        found = true;
                         break;
                     }
                 }
 
-                if (studentExists) {
-                    submitComplaint(studentName, email, contact);
+                progressDialog.dismiss(); // Hide progress dialog
+
+                if (found) {
+                    showSubmissionDialog(studentDetails, healthIssue, description);
                 } else {
-                    Toast.makeText(AddComplaintActivity.this, "Student not found!", Toast.LENGTH_SHORT).show();
+                    showErrorDialog("Student Not Found", "Please enter a valid student email.");
                 }
+
             } catch (Exception e) {
-                Log.e("CSV_ERROR", "Error reading student data", e);
+                progressDialog.dismiss();
+                e.printStackTrace();
+                Toast.makeText(this, "Error reading CSV", Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(e -> Log.e("FIREBASE_STORAGE", "Failed to fetch CSV", e));
+        }).addOnFailureListener(e -> {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Failed to fetch student data", Toast.LENGTH_SHORT).show();
+        });
     }
 
-    private void submitComplaint(String name, String email, String contact) {
-        String healthIssue = etHealthIssue.getText().toString().trim();
-        String description = etDescription.getText().toString().trim();
-        String treatment = etTreatment.getText().toString().trim();
+    private void showSubmissionDialog(HashMap<String, String> studentDetails, String healthIssue, String description) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Submitting Report");
+        builder.setMessage("Submitting Health Report...");
 
+        ProgressDialog submitProgressDialog = new ProgressDialog(this);
+        submitProgressDialog.setMessage("Submitting Health Report...");
+        submitProgressDialog.setCancelable(false);
+        submitProgressDialog.show();
+
+        submitComplaint(studentDetails, healthIssue, description, submitProgressDialog);
+    }
+
+    private void submitComplaint(HashMap<String, String> studentDetails, String healthIssue, String description, ProgressDialog submitProgressDialog) {
+        String complaintId = complaintsRef.push().getKey();
         String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        HashMap<String, Object> complaintData = new HashMap<>();
-        complaintData.put("name", name);
-        complaintData.put("email", email);
-        complaintData.put("contact", contact);
-        complaintData.put("healthIssue", healthIssue);
-        complaintData.put("description", description);
-        complaintData.put("treatment", treatment);
-        complaintData.put("date", currentDate);
-        complaintData.put("time", currentTime);
-        complaintData.put("location", "SGGSIE&T");
+        HashMap<String, Object> complaint = new HashMap<>();
+        complaint.putAll(studentDetails);
+        complaint.put("healthissue", healthIssue);
+        complaint.put("description", description);
+        complaint.put("currentdate", currentDate);
+        complaint.put("currenttime", currentTime);
+        complaint.put("treatment", "Pending");
+        complaint.put("location", "SGGSIE&T");
 
-        complaintsRef.push().setValue(complaintData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(AddComplaintActivity.this, "Complaint Submitted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AddComplaintActivity.this, "Failed to submit complaint", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        complaintsRef.child(complaintId).setValue(complaint)
+                .addOnSuccessListener(aVoid -> {
+                    submitProgressDialog.dismiss();
+                    showSuccessDialog();
+                })
+                .addOnFailureListener(e -> {
+                    submitProgressDialog.dismiss();
+                    Toast.makeText(this, "Failed to submit complaint", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void showErrorDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .setCancelable(false)
+                .show();
+    }
+
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Success")
+                .setMessage("Complaint submitted successfully!")
+                .setPositiveButton("OK", (dialog, which) -> finish())
+                .setCancelable(false)
+                .show();
     }
 }

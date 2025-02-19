@@ -7,6 +7,14 @@
     <color name="text_primary">#00137d</color>
     <color name="text_secondary">#666666</color>
     <color name="complaint_bg">#ede1d0</color>
+    <color name="gray_text">#757575</color> <!-- Dark Gray -->
+    <color name="light_blue_background">#E3F2FD</color> <!-- Light Blue -->
+    <color name="red_warning">#D32F2F</color> <!-- Red for Warnings -->
+
+
+    <color name="light_gray">#F5F5F5</color>
+
+    <color name="primary">#193050FE</color>
 
     <color name="icon_bg">#E3E8FF</color>
 </resources>

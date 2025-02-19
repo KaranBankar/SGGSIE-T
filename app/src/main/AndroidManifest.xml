@@ -19,7 +19,34 @@
         android:theme="@style/Theme.SGGSIET"
         tools:targetApi="31">
         <activity
+            android:name=".StudentModule.BudgetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.CheatRecordsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.HealthReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.VotingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.ComplaintActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.EventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.StudentDashboard"
+            android:exported="false" />
+        <activity
             android:name=".AdminModule.ElectionModule"
+            android:exported="false" />
+        <activity
+            android:name=".DocterModule.AddStudentReport"
+            android:exported="false" />
+        <activity
+            android:name=".DocterModule.ViewStudentReports"
             android:exported="false" />
         <activity
             android:name=".DocterModule.DocterDashboard"
@@ -35,10 +62,10 @@
             android:exported="true" />
         <activity
             android:name=".FacultyModuleActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".AdminModule.UploadData"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

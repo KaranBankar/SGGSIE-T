@@ -80,15 +80,16 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/medicalreport" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="start">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,7 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add new student health report – Ensure every SGGSIE&amp;T student stays healthy!"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-thin"
                     android:textColor="#555" />
             </LinearLayout>
         </LinearLayout>
@@ -128,14 +132,15 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/medicalhistory" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_gravity="start"
                 android:orientation="vertical">
 
                 <TextView
@@ -149,8 +154,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="View submitted student health reports – Ensure every SGGSIE&amp;T student stays healthy!"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
                     android:textColor="#555" />
             </LinearLayout>
         </LinearLayout>

@@ -7,29 +7,30 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sggsiet.AdminModule.PrincipalDashboard;
 import com.example.sggsiet.DocterModule.DocterDashboard;
+import com.example.sggsiet.StudentModule.StudentDashboard;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Login extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class Login extends AppCompatActivity {
     private String generatedOtp;
 
     private static final int SMS_PERMISSION_CODE = 101;
-    private static final String DEFAULT_PASSWORD = "Default@123";  // Default password for Firebase Auth
+    private static final String DEFAULT_PASSWORD = "Default@123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,28 +74,58 @@ public class Login extends AppCompatActivity {
     private void sendOtp() {
         String email = etEmail.getText().toString().trim();
         String userType = spinnerLoginType.getText().toString();
-        String phoneNumber = "";
 
-        switch (userType) {
-            case "Administration":
-                if (email.equals("admin@gmail.com")) phoneNumber = "8261830043";
-                break;
-            case "Faculty":
-                if (email.equals("faculty@gmail.com")) phoneNumber = "9307879687";
-                break;
-            case "Doctor":
-                if (email.equals("doctor@gmail.com")) phoneNumber = "9322067937";
-                break;
-            case "Student":
-                Toast.makeText(this, "Student login is not implemented yet", Toast.LENGTH_SHORT).show();
-                return;
-        }
-
-        if (phoneNumber.isEmpty()) {
-            Toast.makeText(this, "Invalid email for selected role", Toast.LENGTH_SHORT).show();
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (userType.equals("Student")) {
+            fetchStudentPhoneNumber(email);
+        } else {
+            String phoneNumber = getStaticPhoneNumber(userType, email);
+            if (phoneNumber.isEmpty()) {
+                Toast.makeText(this, "Invalid email for selected role", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            generateAndSendOtp(phoneNumber);
+        }
+    }
+
+    private void fetchStudentPhoneNumber(String email) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference("dummy_student_data.csv");
+
+        storageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new java.io.ByteArrayInputStream(bytes)))) {
+                String line;
+                boolean found = false;
+
+                while ((line = reader.readLine()) != null) {
+                    String[] columns = line.split(",");
+
+                    if (columns.length < 8) continue;
+
+                    if (columns[2].trim().equalsIgnoreCase(email)) {
+                        String phoneNumber = columns[5].trim();
+                        found = true;
+                        generateAndSendOtp(phoneNumber);
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    Toast.makeText(this, "Email not found in records", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Error reading student data", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Failed to fetch student data", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void generateAndSendOtp(String phoneNumber) {
         generatedOtp = String.valueOf(new Random().nextInt(899999) + 100000);
         requestSmsPermission(phoneNumber, generatedOtp);
     }
@@ -119,6 +150,7 @@ public class Login extends AppCompatActivity {
 
     private void verifyOtp() {
         String enteredOtp = etOtp.getText().toString().trim();
+
         if (generatedOtp == null || !generatedOtp.equals(enteredOtp)) {
             Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show();
             return;
@@ -127,40 +159,49 @@ public class Login extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String userType = spinnerLoginType.getText().toString();
 
-        auth.createUserWithEmailAndPassword(email, DEFAULT_PASSWORD)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = auth.getCurrentUser();
-                        if (firebaseUser != null) {
-                            saveUserToDatabase(firebaseUser.getUid(), email, userType);
-                        }
-                    } else {
-                        Toast.makeText(this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        auth.fetchSignInMethodsForEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                boolean isExistingUser = !task.getResult().getSignInMethods().isEmpty();
+
+                if (isExistingUser) {
+                    // User already exists, sign them in
+                    auth.signInWithEmailAndPassword(email, DEFAULT_PASSWORD)
+                            .addOnCompleteListener(signInTask -> {
+                                if (signInTask.isSuccessful()) {
+                                    saveUserSession(userType);
+                                    navigateToDashboard(userType);
+                                } else {
+                                    Toast.makeText(this, "Login failed: " + signInTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    // User does not exist, create new user
+                    auth.createUserWithEmailAndPassword(email, DEFAULT_PASSWORD)
+                            .addOnCompleteListener(registerTask -> {
+                                if (registerTask.isSuccessful()) {
+                                    saveUserSession(userType);
+                                    navigateToDashboard(userType);
+                                } else {
+                                    Toast.makeText(this, "Registration failed: " + registerTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            } else {
+                Toast.makeText(this, "Error checking user existence", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void saveUserToDatabase(String userId, String email, String userType) {
-        Map<String, Object> userMap = new HashMap<>();
-        userMap.put("email", email);
-        userMap.put("userType", userType);
-
-        databaseReference.child(userId).setValue(userMap)
-                .addOnSuccessListener(unused -> {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLoggedIn", true);
-                    editor.putString("userType", userType);
-                    editor.apply();
-
-                    Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    navigateToDashboard(userType);
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    private void saveUserSession(String userType) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", true);
+        editor.putString("userType", userType);
+        editor.apply();
     }
 
     private void navigateToDashboard(String userType) {
         Intent intent;
+
         switch (userType) {
             case "Administration":
                 intent = new Intent(this, PrincipalDashboard.class);
@@ -171,23 +212,43 @@ public class Login extends AppCompatActivity {
             case "Doctor":
                 intent = new Intent(this, DocterDashboard.class);
                 break;
+            case "Student":
+                intent = new Intent(this, StudentDashboard.class);
+                break;
             default:
-                Toast.makeText(this, "Invalid User Type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid user type", Toast.LENGTH_SHORT).show();
                 return;
         }
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == SMS_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                sendOtp();
-            } else {
-                Toast.makeText(this, "SMS permission required to send OTP", Toast.LENGTH_SHORT).show();
-            }
-        }
+
+    private void saveUserData(String email, String userType) {
+        String uid = auth.getCurrentUser().getUid();
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("email", email);
+        userMap.put("userType", userType);
+
+        databaseReference.child(uid).setValue(userMap)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "User data saved", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Failed to save user data", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private String getStaticPhoneNumber(String userType, String email) {
+        HashMap<String, String> phoneNumbers = new HashMap<>();
+        phoneNumbers.put("Administration_admin@gmail.com", "8261830043");
+        phoneNumbers.put("Faculty_faculty@gmail.com", "9307879687");
+        phoneNumbers.put("Doctor_doctor@gmail.com", "9322067937");
+
+        String key = userType + "_" + email;
+        return phoneNumbers.getOrDefault(key, "");
     }
 }
