@@ -7,51 +7,66 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sggsiet.AdminModule.PrincipalDashboard;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.annotation.ElementType;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Login extends AppCompatActivity {
 
     private AutoCompleteTextView spinnerLoginType;
     private EditText etEmail, etOtp;
-    private Button btnLogin;
+    private MaterialButton btnLogin;
+    private MaterialTextView btnGetOtp;
+
+    private FirebaseAuth auth;
+    private DatabaseReference databaseReference;
+    private SharedPreferences sharedPreferences;
     private String generatedOtp;
 
     private static final int SMS_PERMISSION_CODE = 101;
-    private SharedPreferences sharedPreferences;
+    private static final String DEFAULT_PASSWORD = "Default@123";  // Default password for Firebase Auth
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        auth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+
         spinnerLoginType = findViewById(R.id.spinnerLoginType);
         etEmail = findViewById(R.id.etEmail);
         etOtp = findViewById(R.id.etOtp);
         btnLogin = findViewById(R.id.btnLogin);
+        btnGetOtp = findViewById(R.id.tvGetOtp);
 
-        sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-
-        // Dropdown options
         String[] userTypes = {"Administration", "Faculty", "Doctor", "Student"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, userTypes);
         spinnerLoginType.setAdapter(adapter);
 
-        findViewById(R.id.tvGetOtp).setOnClickListener(v -> sendOtp());
-        btnLogin.setOnClickListener(v -> verifyLogin());
+        btnGetOtp.setOnClickListener(v -> sendOtp());
+        btnLogin.setOnClickListener(v -> verifyOtp());
     }
 
     private void sendOtp() {
@@ -101,20 +116,49 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private void verifyLogin() {
+    private void verifyOtp() {
         String enteredOtp = etOtp.getText().toString().trim();
-        String userType = spinnerLoginType.getText().toString();
-
         if (generatedOtp == null || !generatedOtp.equals(enteredOtp)) {
             Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", true);
-        editor.putString("userType", userType);
-        editor.apply();
+        String email = etEmail.getText().toString().trim();
+        String userType = spinnerLoginType.getText().toString();
 
+        auth.createUserWithEmailAndPassword(email, DEFAULT_PASSWORD)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            saveUserToDatabase(firebaseUser.getUid(), email, userType);
+                        }
+                    } else {
+                        Toast.makeText(this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void saveUserToDatabase(String userId, String email, String userType) {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("email", email);
+        userMap.put("userType", userType);
+
+        databaseReference.child(userId).setValue(userMap)
+                .addOnSuccessListener(unused -> {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.putString("userType", userType);
+                    editor.apply();
+
+                    Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    navigateToDashboard(userType);
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void navigateToDashboard(String userType) {
         Intent intent;
         switch (userType) {
             case "Administration":
@@ -127,11 +171,9 @@ public class Login extends AppCompatActivity {
                 intent = new Intent(this, DisplayElectionPositions.class);
                 break;
             default:
-                Toast.makeText(this, "Invalid login type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid User Type", Toast.LENGTH_SHORT).show();
                 return;
         }
-
-        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }
