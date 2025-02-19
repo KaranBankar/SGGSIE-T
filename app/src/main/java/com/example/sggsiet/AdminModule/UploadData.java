@@ -3,6 +3,7 @@ package com.example.sggsiet.AdminModule;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import com.google.firebase.auth.FirebaseAuth;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -72,13 +73,22 @@ public class UploadData extends AppCompatActivity {
         }
     }
 
+
+
     private void uploadFile(Uri fileUri, String folder) {
         if (fileUri != null) {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (auth.getCurrentUser() == null) {
+                Toast.makeText(this, "Please log in to upload files", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String userId = auth.getCurrentUser().getUid();
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference fileReference = storageReference.child(folder + "/" + System.currentTimeMillis() + "_" + fileUri.getLastPathSegment());
+            StorageReference fileReference = storageReference.child("uploads/" + userId + "/" + folder + "/" + System.currentTimeMillis() + "_" + fileUri.getLastPathSegment());
             fileReference.putFile(fileUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         progressDialog.dismiss();
@@ -96,4 +106,5 @@ public class UploadData extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
