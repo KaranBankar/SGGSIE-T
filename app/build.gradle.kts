@@ -55,6 +55,8 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
+    implementation ("com.google.android.material:material:1.9.0")
+
     // Firebase Dependencies (Add More If Needed)
     implementation("com.google.firebase:firebase-analytics")
 
