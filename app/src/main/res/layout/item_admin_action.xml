@@ -3,96 +3,121 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white">
 
-    <com.google.android.flexbox.FlexboxLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:flexWrap="wrap"
-        app:justifyContent="space_between">
+        android:columnCount="2"
+        android:rowCount="3"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-        <!-- Card Items -->
+        <!-- Exam Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/examCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/examModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Exam" />
+                    android:text="Exam"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Reports Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/reportsCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/reportsModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Reports" />
+                    android:text="Reports"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Colleges Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/collegesCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/collegesModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Colleges" />
+                    android:text="Colleges"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Assessments Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/assessmentCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/assessmentsModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Assessments" />
+                    android:text="Assessments"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Admission Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/admissionCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/admissionModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Admission" />
+                    android:text="Admission"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Scholarship Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/DashboardCard"
-            android:id="@+id/scholarshipCard">
-            <LinearLayout style="@style/CardContent">
+            android:id="@+id/scholarshipModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
+
+            <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    style="@style/CardIcon"
-                    android:src="@drawable/feedback" />
+                    android:src="@drawable/user"
+                    style="@style/CardIconStyle" />
+
                 <TextView
-                    style="@style/CardText"
-                    android:text="Scholarship" />
+                    android:text="Scholarship"
+                    style="@style/CardTextStyle" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-    </com.google.android.flexbox.FlexboxLayout>
+    </GridLayout>
 
 </LinearLayout>
