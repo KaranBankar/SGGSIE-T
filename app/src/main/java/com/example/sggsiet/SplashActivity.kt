@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
 
         // Delay for 1 second and navigate to LoginActivity
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, FacultyModuleActivity::class.java))
             finish() // Close Splash Screen
         }, 1000)
     }
