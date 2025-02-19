@@ -25,7 +25,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_election"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -41,7 +41,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_complaint"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -57,7 +57,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_budget"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -73,7 +73,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_data"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -89,7 +89,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_leave"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -105,7 +105,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/ic_facility"
+                    android:src="@drawable/feedback"
                     style="@style/CardIconStyle" />
 
                 <TextView

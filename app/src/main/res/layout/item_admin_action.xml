@@ -21,7 +21,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_exam" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Exam" />
@@ -34,7 +34,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_reports" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Reports" />
@@ -47,7 +47,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_college" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Colleges" />
@@ -60,7 +60,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_assessment" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Assessments" />
@@ -73,7 +73,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_admission" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Admission" />
@@ -86,7 +86,7 @@
             <LinearLayout style="@style/CardContent">
                 <ImageView
                     style="@style/CardIcon"
-                    android:src="@drawable/ic_scholarship" />
+                    android:src="@drawable/feedback" />
                 <TextView
                     style="@style/CardText"
                     android:text="Scholarship" />
