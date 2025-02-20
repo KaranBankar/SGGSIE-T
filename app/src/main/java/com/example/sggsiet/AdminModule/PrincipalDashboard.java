@@ -49,7 +49,7 @@ public class PrincipalDashboard extends AppCompatActivity {
             startActivity(new Intent(this,ElectionModule.class));
         });
         facility.setOnClickListener(view -> {
-            startActivity(new Intent(this, SubmitComplaint.class));
+            startActivity(new Intent(this, FacilityRegistration.class));
         });
 
         leavemodule.setOnClickListener(view -> {

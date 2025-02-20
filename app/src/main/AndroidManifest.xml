@@ -2,17 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Optional: Only required if sending SMS -->
+    <!-- Unique uses-feature tags -->
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <!-- Unique uses-permission tags -->
     <uses-permission android:name="android.permission.SEND_SMS" />
-
-    <!-- Permissions for Image Selection -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -26,6 +24,29 @@
         android:theme="@style/Theme.SGGSIET"
         tools:targetApi="31">
 
+        <!-- Unique activities -->
+        <activity android:name=".FacultyModule.FacultyLeaveApplicationActivity" android:exported="false" />
+        <activity android:name=".FacultyModule.FacultyHealthReportActivity" android:exported="false" />
+        <activity android:name=".FacultyModule.FacultyCheatRecordsActivity" android:exported="false" />
+        <activity android:name=".Login" android:exported="false" />
+        <activity android:name=".DisplayElectionPositions" android:exported="true" />
+        <activity android:name=".AdminModule.PrincipalDashboard" android:exported="true" />
+        <activity android:name=".FacultyModuleActivity" android:exported="true" />
+        <activity android:name=".SplashActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".StudentModule.StudentDashboard" android:exported="false" />
+        <activity android:name=".StudentModule.EventsActivity" android:exported="false" />
+        <activity android:name=".StudentModule.HealthReportActivity" android:exported="false" />
+        <activity android:name=".StudentModule.VotingActivity" android:exported="false" />
+        <activity android:name=".StudentModule.ComplaintActivity" android:exported="false" />
+        <activity android:name=".StudentModule.BudgetActivity" android:exported="false" />
+        <activity android:name=".StudentModule.CheatRecordsActivity" android:exported="false" />
+        <activity android:name=".UploadEvent" android:exported="false" />
         <activity android:name=".SubmitComplaint" android:exported="false" />
         <activity android:name=".AdminModule.LeavesManagement" android:exported="false" />
         <activity android:name=".AdminModule.HomeComplaints" android:exported="false" />
@@ -33,21 +54,7 @@
         <activity android:name=".AdminModule.BudgetOverview" android:exported="false" />
         <activity android:name=".AdminModule.ElectionModule" android:exported="false" />
         <activity android:name=".DocterModule.DocterDashboard" android:exported="false" />
-        <activity android:name=".Login" android:exported="false" />
-
-        <!-- Ensure exported="true" for activities that might be accessed externally -->
-        <activity android:name=".DisplayElectionPositions" android:exported="true" />
-        <activity android:name=".AdminModule.PrincipalDashboard" android:exported="true" />
-        <activity android:name=".FacultyModuleActivity" android:exported="true" />
         <activity android:name=".AdminModule.UploadData" android:exported="true" />
-
-        <!-- Launcher Activity (Must be exported) -->
-        <activity android:name=".SplashActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
     </application>
 
