@@ -1,26 +1,59 @@
 package com.example.sggsiet.StudentModule;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sggsiet.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComplaintActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerViewComplaints;
+    private ComplaintAdapter complaintAdapter;
+    private List<Complaint> complaintList;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_complaint);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        recyclerViewComplaints = findViewById(R.id.recyclerViewComplaints);
+        complaintList = new ArrayList<>();
+        complaintAdapter = new ComplaintAdapter(this, complaintList);
+        recyclerViewComplaints.setAdapter(complaintAdapter);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("complaints");
+        fetchComplaints();
+    }
+
+    private void fetchComplaints() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                complaintList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Complaint complaint = dataSnapshot.getValue(Complaint.class);
+                    complaintList.add(complaint);
+                }
+                complaintAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ComplaintActivity.this, "Failed to load complaints", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

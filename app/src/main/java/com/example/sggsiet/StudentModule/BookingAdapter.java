@@ -1,7 +1,12 @@
 package com.example.sggsiet.StudentModule;
 
+
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +15,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +23,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+
 import com.example.sggsiet.R;
 import com.google.android.material.card.MaterialCardView;
 import java.io.File;
@@ -29,6 +39,7 @@ import java.util.List;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder> {
     private Context context;
     private List<Booking> bookingList;
+    private static final int STORAGE_PERMISSION_CODE = 101;
 
     public BookingAdapter(Context context, List<Booking> bookingList) {
         this.context = context;
@@ -55,7 +66,22 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         holder.studentMobile.setText(booking.getStudentMobile());
 
         // Generate PDF when clicking "Download Ticket"
-        holder.downloadPDF.setOnClickListener(v -> generatePDF(booking));
+        holder.downloadPDF.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // Android 9 and below
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            STORAGE_PERMISSION_CODE);
+                } else {
+                    generatePDF(booking); // Permission already granted
+                }
+            } else {
+                // No need for storage permission in Android 10+
+                generatePDF(booking);
+            }
+        });
+
     }
 
     @Override
@@ -83,48 +109,51 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 
 
 
+
+
+
+    // Handle Permission Result
+
+
+
     private void generatePDF(Booking booking) {
         PdfDocument document = new PdfDocument();
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(600, 850, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
 
-        // 🎨 Paint object for styling
+        // 🎨 Paint for styling
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setTextSize(18);
         paint.setTypeface(Typeface.DEFAULT_BOLD);
 
-        // 🏫 College Logo - Load from drawable
+        // 🏫 Draw College Logo
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.app_logo);
         Bitmap scaledLogo = Bitmap.createScaledBitmap(logo, 100, 100, false);
         canvas.drawBitmap(scaledLogo, 250, 30, null);
 
-        // 📜 College Name Header
+        // 🏷️ Draw College Name
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setColor(Color.BLUE);
         paint.setTextSize(22);
-        canvas.drawText("Government College of Engineering", 300, 150, paint);
+        canvas.drawText("Shri Guru Gobind Singhji Institute of Engineering", 300, 150, paint);
 
         paint.setTextSize(18);
         paint.setColor(Color.BLACK);
-        canvas.drawText("Chhatrapati Sambhajinagar", 300, 175, paint);
+        canvas.drawText("and Technology (SGGSIET) Nanded", 300, 175, paint);
 
-        // 🏷️ Section Heading
+        // 📝 Draw Booking Details
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTypeface(Typeface.DEFAULT_BOLD);
         paint.setColor(Color.DKGRAY);
         paint.setTextSize(20);
         canvas.drawText("Booking Ticket", 30, 220, paint);
 
-        // 📌 Draw a line under heading
         paint.setColor(Color.BLACK);
         canvas.drawLine(30, 230, 570, 230, paint);
-
-        // 📝 Event Details
         paint.setTextSize(16);
         paint.setTypeface(Typeface.DEFAULT);
-        paint.setColor(Color.BLACK);
         canvas.drawText("Event: " + booking.getEventName(), 30, 260, paint);
         canvas.drawText("Date: " + booking.getEventDate(), 30, 290, paint);
         canvas.drawText("Time: " + booking.getEventTime(), 30, 320, paint);
@@ -151,14 +180,22 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 
         document.finishPage(page);
 
-        // 🗄️ Save PDF to Downloads Folder
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Booking_Ticket.pdf");
+        // 📂 Save PDF in app storage (Android 10+ safe)
+        File file;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Use app's private folder (No permission needed)
+            file = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "Booking_Ticket.pdf");
+        } else {
+            // Use Downloads folder (Requires permission for API < 29)
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Booking_Ticket.pdf");
+        }
 
         try {
             document.writeTo(new FileOutputStream(file));
-            Toast.makeText(context, "PDF Saved to Downloads", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "PDF Saved: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Failed to save PDF", Toast.LENGTH_SHORT).show();
         }
 
         document.close();
@@ -170,7 +207,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         context.startActivity(intent);
     }
-
 
 
 }

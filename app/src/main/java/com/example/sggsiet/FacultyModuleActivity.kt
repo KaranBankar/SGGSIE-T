@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.sggsiet.FacultyModule.AproveEvents
 import com.example.sggsiet.FacultyModule.FacultyCheatRecordsActivity
 import com.example.sggsiet.FacultyModule.FacultyHealthReportActivity
 import com.example.sggsiet.FacultyModule.FacultyLeaveApplicationActivity
@@ -37,6 +38,8 @@ class FacultyModuleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityFacultyModuleBinding.inflate(layoutInflater)
+
+
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -63,6 +66,11 @@ class FacultyModuleActivity : AppCompatActivity() {
         setupToolbar()
         setupNavigationDrawer()
 
+        binding.layoutEventAprove.setOnClickListener {
+            val i = Intent(this, AproveEvents::class.java)
+            startActivity(i)
+
+        }
         // Handle button clicks
         binding.CheatRecords.setOnClickListener {
             val i = Intent(this, FacultyCheatRecordsActivity::class.java)

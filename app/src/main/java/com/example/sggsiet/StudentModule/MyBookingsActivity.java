@@ -1,6 +1,8 @@
 package com.example.sggsiet.StudentModule;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,13 +32,26 @@ public class MyBookingsActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("bookings");
 
+        // 🔹 Retrieve logged-in user's mobile number from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String loggedInMobile = sharedPreferences.getString("studentMobile", "9322067937");  // Default if not found
+
+        Log.d("MyBookingsActivity", "Logged-in Mobile: " + loggedInMobile);
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 bookingList.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    bookingList.add(data.getValue(Booking.class));
+                    Booking booking = data.getValue(Booking.class);
+                    if (booking != null) {
+                        Log.d("FirebaseData", "Fetched Booking: " + booking.getStudentMobile());
+                        if (booking.getStudentMobile().equals(loggedInMobile)) {
+                            bookingList.add(booking);
+                        }
+                    }
                 }
+                Log.d("MyBookingsActivity", "Filtered Bookings Count: " + bookingList.size());
                 bookingAdapter.notifyDataSetChanged();
             }
 

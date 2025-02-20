@@ -284,7 +284,7 @@ public class Login extends AppCompatActivity {
     private String getStaticPhoneNumber(String userType, String email) {
         HashMap<String, String> phoneNumbers = new HashMap<>();
         phoneNumbers.put("Administration_admin@gmail.com", "8261830043");
-        phoneNumbers.put("Faculty_faculty@gmail.com", "9307879687");
+        phoneNumbers.put("Faculty_faculty@gmail.com", "9322067937");
         phoneNumbers.put("Doctor_doctor@gmail.com", "9322067937");
 
         String key = userType + "_" + email;

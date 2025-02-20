@@ -37,7 +37,7 @@ public class StudentDashboard extends AppCompatActivity {
 
         // Set onClick listeners for navigation
         cardEvents.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, EventsActivity.class)));
-        cardComplaints.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, ComplaintActivity.class)));
+        cardComplaints.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, StudentComplaints.class)));
         cardVoteNow.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, VotingActivity.class)));
         cardHealthReport.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, HealthReportActivity.class)));
         cardCheatRecords.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, CheatRecordsActivity.class)));

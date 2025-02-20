@@ -97,6 +97,7 @@
                     app:cardElevation="10dp">
 
                     <LinearLayout
+                        android:id="@+id/layout_event_aprove"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#17A5090C"

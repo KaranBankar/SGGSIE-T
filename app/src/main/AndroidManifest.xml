@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Unique uses-feature tags -->
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" /> <!-- Unique uses-permission tags -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!-- Unique uses-permission tags -->
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -27,6 +26,7 @@
         android:theme="@style/Theme.SGGSIET"
         tools:targetApi="31">
 
+        <!-- File Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.sggsiet.fileprovider"
@@ -36,88 +36,40 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity
-            android:name=".StudentModule.MyBookingsActivity"
-            android:exported="false" />
-        <!-- Unique activities -->
-        <activity
-            android:name=".FacultyModule.FacultyLeaveApplicationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FacultyModule.FacultyHealthReportActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FacultyModule.FacultyCheatRecordsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".DisplayElectionPositions"
-            android:exported="true" />
-        <activity
-            android:name=".AdminModule.PrincipalDashboard"
-            android:exported="true" />
-        <activity
-            android:name=".FacultyModuleActivity"
-            android:exported="true" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true">
+
+        <!-- Activities -->
+        <activity android:name=".StudentModule.VotingPage" android:exported="true" />
+        <activity android:name=".StudentModule.MyBookingsActivity" android:exported="false" />
+        <activity android:name=".FacultyModule.FacultyLeaveApplicationActivity" android:exported="false" />
+        <activity android:name=".FacultyModule.FacultyHealthReportActivity" android:exported="false" />
+        <activity android:name=".FacultyModule.FacultyCheatRecordsActivity" android:exported="false" />
+        <activity android:name=".Login" android:exported="false" />
+        <activity android:name=".DisplayElectionPositions" android:exported="true" />
+        <activity android:name=".AdminModule.PrincipalDashboard" android:exported="true" />
+        <activity android:name=".FacultyModuleActivity" android:exported="true" />
+        <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".StudentModule.StudentDashboard"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.EventsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.HealthReportActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.VotingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.ComplaintActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.BudgetActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StudentModule.CheatRecordsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UploadEvent"
-            android:exported="false" />
-        <activity
-            android:name=".SubmitComplaint"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.LeavesManagement"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.HomeComplaints"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.FacilityRegistration"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.BudgetOverview"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.ElectionModule"
-            android:exported="false" />
-        <activity
-            android:name=".DocterModule.DocterDashboard"
-            android:exported="false" />
-        <activity
-            android:name=".AdminModule.UploadData"
-            android:exported="true" />
+        <activity android:name=".StudentModule.StudentDashboard" android:exported="false" />
+        <activity android:name=".StudentModule.EventsActivity" android:exported="false" />
+        <activity android:name=".StudentModule.HealthReportActivity" android:exported="false" />
+        <activity android:name=".StudentModule.VotingActivity" android:exported="true" />
+        <activity android:name=".StudentModule.ComplaintActivity" android:exported="false" />
+        <activity android:name=".StudentModule.BudgetActivity" android:exported="false" />
+        <activity android:name=".StudentModule.CheatRecordsActivity" android:exported="false" />
+        <activity android:name=".UploadEvent" android:exported="false" />
+        <activity android:name=".SubmitComplaint" android:exported="false" />
+        <activity android:name=".AdminModule.LeavesManagement" android:exported="false" />
+        <activity android:name=".AdminModule.HomeComplaints" android:exported="false" />
+        <activity android:name=".AdminModule.FacilityRegistration" android:exported="false" />
+        <activity android:name=".AdminModule.BudgetOverview" android:exported="false" />
+        <activity android:name=".AdminModule.ElectionModule" android:exported="false" />
+        <activity android:name=".DocterModule.DocterDashboard" android:exported="false" />
+        <activity android:name=".AdminModule.UploadData" android:exported="true" />
+        <activity android:name=".FacultyModule.AproveEvents" android:exported="false" />
+        <activity android:name=".StudentModule.StudentComplaints" android:exported="false" />
     </application>
-
 </manifest>

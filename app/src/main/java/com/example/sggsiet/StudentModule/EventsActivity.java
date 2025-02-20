@@ -45,36 +45,39 @@ public class EventsActivity extends AppCompatActivity {
         eventsAdapter = new EventsAdapter(this, eventList);
         recyclerView.setAdapter(eventsAdapter);
 
-        btnMyBookings.setOnClickListener(v->{
+        btnMyBookings.setOnClickListener(v -> {
             startActivity(new Intent(EventsActivity.this, MyBookingsActivity.class));
         });
 
         // Firebase reference
         databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
-        // Fetch Events from Firebase
-        fetchEventsFromFirebase();
+        // Fetch only Approved Events from Firebase
+        fetchApprovedEventsFromFirebase();
 
         // Floating Action Button Click
         fabUploadEvent.setOnClickListener(v -> startActivity(new Intent(EventsActivity.this, UploadEvent.class)));
     }
 
-    private void fetchEventsFromFirebase() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                eventList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Event event = dataSnapshot.getValue(Event.class);
-                    eventList.add(event);
-                }
-                eventsAdapter.notifyDataSetChanged();
-            }
+    private void fetchApprovedEventsFromFirebase() {
+        databaseReference.orderByChild("status").equalTo("Approved")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        eventList.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Event event = dataSnapshot.getValue(Event.class);
+                            if (event != null) {
+                                eventList.add(event);
+                            }
+                        }
+                        eventsAdapter.notifyDataSetChanged();
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle possible errors
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle possible errors
+                    }
+                });
     }
 }

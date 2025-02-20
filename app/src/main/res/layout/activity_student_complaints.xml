@@ -9,6 +9,7 @@
 
     <!-- Top Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/ios_blue"
@@ -17,7 +18,16 @@
         app:navigationIconTint="@color/primary_blue"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:titleTextAppearance="@style/ToolbarTitleStyle" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_view_complaints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        app:strokeColor="@color/ios_green"
+        android:textColor="@color/ios_green"
+        android:text="View Other Complaints"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_margin="16dp" />
 
     <!-- Content ScrollView -->
     <ScrollView
@@ -43,17 +53,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                android:layout_marginBottom="16dp">
 
                 <Spinner
+                    android:id="@+id/spinner_complaint_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:entries="@array/complaint_types" />
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Title -->
@@ -69,13 +75,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter title" />
@@ -94,13 +97,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter description"
@@ -118,40 +118,50 @@
                 android:paddingBottom="8dp"
                 android:textColor="@android:color/black" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose File"
-                android:id="@+id/choosefile"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:cornerRadius="20dp"
-                app:strokeColor="@color/ios_blue"
-                app:strokeWidth="1dp"
-                android:layout_marginBottom="16dp"
-                app:backgroundTint="@android:color/transparent"
-                android:textColor="@color/ios_blue" />
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_choose_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose File"
+                    app:strokeColor="#03A9F4"
+                    android:textColor="#03A9F4"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_capture_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Capture"
+                    app:strokeColor="#FF5722"
+                    android:textColor="#FF5722"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
             <ImageView
-                android:id="@+id/selected_image"
+                android:id="@+id/iv_selected_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:visibility="gone"
-                android:background="@android:color/darker_gray" />
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="8dp" />
 
             <!-- Submit Button -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:cornerRadius="24dp"
                 app:strokeColor="@color/ios_green"
                 android:textColor="@color/ios_green"
-                app:strokeWidth="1dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:backgroundTint="@android:color/transparent"
-                />
+                android:text="Submit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="16dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

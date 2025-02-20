@@ -1,7 +1,7 @@
 package com.example.sggsiet.StudentModule;
 
 public class Event {
-    public String eventId, name, description, date, time, location, imageUrl, seats, bookings;
+    public String eventId, name, description, date, time, location, imageUrl, seats, bookings,status;
 
     public Event() {
         // Default constructor required for Firebase
@@ -19,6 +19,7 @@ public class Event {
         this.time = time;
         this.location = location;
         this.imageUrl = imageUrl;
+        this.status=pending;
         this.seats = seats;
         this.bookings = bookings; // Default value for bookings
     }
