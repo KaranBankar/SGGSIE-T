@@ -3,6 +3,7 @@ package com.example.sggsiet.StudentModule;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import java.util.List;
 public class EventsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private Button btnMyBookings;
     private FloatingActionButton fabUploadEvent;
     private EventsAdapter eventsAdapter;
     private List<Event> eventList;
@@ -35,12 +37,17 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
 
         recyclerView = findViewById(R.id.recyclerView);
+        btnMyBookings = findViewById(R.id.btnMyBookings);
         fabUploadEvent = findViewById(R.id.fabUploadEvent);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
         eventsAdapter = new EventsAdapter(this, eventList);
         recyclerView.setAdapter(eventsAdapter);
+
+        btnMyBookings.setOnClickListener(v->{
+            startActivity(new Intent(EventsActivity.this, MyBookingsActivity.class));
+        });
 
         // Firebase reference
         databaseReference = FirebaseDatabase.getInstance().getReference("events");

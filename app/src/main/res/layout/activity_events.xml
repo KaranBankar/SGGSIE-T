@@ -10,29 +10,32 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:layout_above="@id/btnMyBookings"/>
 
-    <!-- My Bookings FAB -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMyBookings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_my_bookings"
-        android:contentDescription="My Bookings"
-        app:backgroundTint="@color/secondary_blue"
-        android:layout_margin="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@id/fabUploadEvent" />
+    <!-- My Bookings Button (BOTTOM FULL WIDTH) -->
+    <Button
+        android:id="@+id/btnMyBookings"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="My Bookings"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/primary_blue"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"/>
 
-    <!-- Upload Event FAB -->
+    <!-- Upload Event Floating Button (ABOVE My Bookings, RIGHT SIDE) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabUploadEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/user"
+        android:src="@drawable/add"
         android:contentDescription="Upload Event"
         app:backgroundTint="@color/primary_blue"
         android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/btnMyBookings"
         android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>
