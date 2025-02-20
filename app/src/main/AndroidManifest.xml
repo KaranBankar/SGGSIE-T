@@ -40,6 +40,13 @@
             android:name=".StudentModule.MyBookingsActivity"
             android:exported="false" />
         <!-- Unique activities -->
+
+        <activity
+            android:name=".FacultyModule.AproveEvents"
+            android:exported="false" />
+        <activity
+            android:name=".StudentModule.VotingPage"
+            android:exported="false" />
         <activity
             android:name=".FacultyModule.FacultyLeaveApplicationActivity"
             android:exported="false" />
