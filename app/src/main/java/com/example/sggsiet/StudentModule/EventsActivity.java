@@ -1,26 +1,73 @@
 package com.example.sggsiet.StudentModule;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sggsiet.R;
+import com.example.sggsiet.UploadEvent;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventsActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private FloatingActionButton fabUploadEvent;
+    private EventsAdapter eventsAdapter;
+    private List<Event> eventList;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_events);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        recyclerView = findViewById(R.id.recyclerView);
+        fabUploadEvent = findViewById(R.id.fabUploadEvent);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        eventList = new ArrayList<>();
+        eventsAdapter = new EventsAdapter(this, eventList);
+        recyclerView.setAdapter(eventsAdapter);
+
+        // Firebase reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("events");
+
+        // Fetch Events from Firebase
+        fetchEventsFromFirebase();
+
+        // Floating Action Button Click
+        fabUploadEvent.setOnClickListener(v -> startActivity(new Intent(EventsActivity.this, UploadEvent.class)));
+    }
+
+    private void fetchEventsFromFirebase() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                eventList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Event event = dataSnapshot.getValue(Event.class);
+                    eventList.add(event);
+                }
+                eventsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle possible errors
+            }
         });
     }
 }

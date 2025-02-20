@@ -24,7 +24,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/exam"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -41,7 +41,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/reports"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -58,7 +58,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/collgege"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -75,7 +75,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/assesment"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -92,7 +92,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/admission"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
@@ -109,7 +109,7 @@
 
             <LinearLayout style="@style/CardContentStyle">
                 <ImageView
-                    android:src="@drawable/sponser"
+                    android:src="@drawable/user"
                     style="@style/CardIconStyle" />
 
                 <TextView
