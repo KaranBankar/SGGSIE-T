@@ -47,9 +47,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.database)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.storage.ktx)
-    implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,8 +62,4 @@ dependencies {
 
     // MPAndroidChart Library (Fixed Version Format)
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
-
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
 }

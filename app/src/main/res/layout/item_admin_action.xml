@@ -8,207 +8,116 @@
     android:padding="16dp"
     android:background="@color/white">
 
-
-
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="2"
+        android:columnCount="2"
+        android:rowCount="3"
         android:orientation="horizontal"
-       >
+        android:layout_gravity="center">
 
-        <!-- CardView for Exam -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        <!-- Exam Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/examModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/exam"
+                    style="@style/CardIconStyle" />
 
-            <ImageView
-                android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/user"
-            android:layout_gravity="center"/>
+                <TextView
+                    android:text="Exam"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Exam"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <!-- Reports Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/reportsModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-    <!-- CardView for Reports -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/reports"
+                    style="@style/CardIconStyle" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+                <TextView
+                    android:text="Reports"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"/>
+        <!-- Colleges Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/collegesModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reports"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/collgege"
+                    style="@style/CardIconStyle" />
 
-    <!-- CardView for Colleges -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+                <TextView
+                    android:text="Colleges"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+        <!-- Assessments Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/assessmentsModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"/>
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/assesment"
+                    style="@style/CardIconStyle" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Colleges"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:text="Assessments"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <!-- CardView for Assessments -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        <!-- Admission Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/admissionModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/admission"
+                    style="@style/CardIconStyle" />
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"/>
+                <TextView
+                    android:text="Admission"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Assessments"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <!-- Scholarship Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/scholarshipModule"
+            style="@style/ModuleCardStyle"
+            android:layout_columnWeight="1">
 
-    <!-- CardView for Admission -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+            <LinearLayout style="@style/CardContentStyle">
+                <ImageView
+                    android:src="@drawable/sponser"
+                    style="@style/CardIconStyle" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+                <TextView
+                    android:text="Scholarship"
+                    style="@style/CardTextStyle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"/>
+    </GridLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Admission"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- CardView for Scholarship -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_columnWeight="1"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Scholarship"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</GridLayout>
-    </LinearLayout>
+</LinearLayout>
