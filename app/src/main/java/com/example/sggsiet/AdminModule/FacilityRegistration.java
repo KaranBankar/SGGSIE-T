@@ -21,9 +21,6 @@ import java.util.List;
 
 public class FacilityRegistration extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private FacilityAdapter facilityAdapter;
-    private List<String> facilityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,33 +28,8 @@ public class FacilityRegistration extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_facility_registration);
 
-        recyclerView = findViewById(R.id.recyclerViewFacilities);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        facilityList = new ArrayList<>();
-        facilityAdapter = new FacilityAdapter(facilityList);
-        recyclerView.setAdapter(facilityAdapter);
 
-        fetchFacilityData();
     }
 
-    private void fetchFacilityData() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("SGGSIE&T/ElectionPositions");
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                facilityList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String facilityName = snapshot.getValue(String.class);
-                    facilityList.add(facilityName);
-                }
-                facilityAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FirebaseError", "Error: " + databaseError.getMessage());
-            }
-        });
-    }
 }

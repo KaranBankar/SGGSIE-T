@@ -1,0 +1,61 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="2dp"
+    app:checkedIcon="@drawable/cheat"
+    app:checkedIconTint="?attr/colorPrimary"
+    app:rippleColor="?attr/colorSecondaryContainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/textViewCandidateName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Candidate Name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:fontFamily="sans-serif-medium"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textViewPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Position"
+            android:textSize="16sp"
+            android:textColor="?attr/colorSecondary"
+            android:fontFamily="sans-serif"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vote"
+            android:textSize="16sp"
+
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/election"
+            app:iconTint="@color/black"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:rippleColor="?attr/colorSecondary"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutline" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
