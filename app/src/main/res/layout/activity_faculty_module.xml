@@ -52,6 +52,14 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -72,10 +80,230 @@
             app:cardElevation="10dp"
             android:backgroundTint="@color/white">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="155dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="10dp"
+                    app:cardElevation="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#17A5090C"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="115dp"
+                            android:layout_height="130dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/event"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Events"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="155dp"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="10dp"
+                    app:cardElevation="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#16234BFF"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="115dp"
+                            android:layout_height="117dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/complain" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Complaints"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="155dp"
+                        android:layout_height="170dp"
+                        android:id="@+id/Election_conduct"
+                        android:layout_margin="10dp"
+                        app:cardElevation="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#1722F59A"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="115dp"
+                                android:layout_height="120dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/vote"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Elections"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_gravity="center"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="155dp"
+                        android:layout_height="170dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/health_report"
+                        app:cardElevation="10dp"
+                       >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#19FFC700"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="115dp"
+                                android:layout_height="120dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/health"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Health Report"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="155dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="10dp"
+                        android:id="@+id/Cheat_Records"
+                        app:cardElevation="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#16FF4F75"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="115dp"
+                                android:layout_height="130dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/cheat"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cheat Records"
+                                android:textColor="@color/black"
+                                android:layout_marginTop="10dp"
+                                android:textSize="20dp"
+                                android:layout_gravity="center"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="155dp"
+                        android:layout_height="170dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/leave_application"
+                        app:cardElevation="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#198352EC"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="115dp"
+                                android:layout_height="130dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/feedback"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Leave Appli."
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
 
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
 
 
 
@@ -88,5 +316,7 @@
         app:menu="@menu/nav_drawer_menu"
         android:layout_marginBottom="20dp"
         app:headerLayout="@layout/nav_header" />
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
