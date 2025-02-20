@@ -17,9 +17,7 @@
         android:id="@+id/fabMyBookings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_my_bookings"
         android:contentDescription="My Bookings"
-        app:backgroundTint="@color/secondary_blue"
         android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
         android:layout_above="@id/fabUploadEvent" />
