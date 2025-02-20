@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +68,5 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
     implementation("com.google.firebase:firebase-storage:19.2.2")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

@@ -62,7 +62,7 @@
                     android:layout_marginBottom="12dp"
                     android:hint="Enter Health Issue"
                     android:padding="16dp"
-                    app:startIconDrawable="@drawable/health">
+                    app:startIconDrawable="@drawable/healthold">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etHealthIssue"
