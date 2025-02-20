@@ -67,4 +67,9 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
     implementation("com.google.firebase:firebase-storage:19.2.2")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
 }
