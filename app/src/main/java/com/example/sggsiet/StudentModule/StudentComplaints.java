@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -18,14 +19,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sggsiet.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -35,7 +32,7 @@ public class StudentComplaints extends AppCompatActivity {
     private Spinner spinnerComplaintType;
     private EditText etTitle, etDescription;
     private ImageView ivSelectedImage;
-    private Button btnChooseImage, btnCaptureImage, btnSubmit,btnViewComplaints;
+    private Button btnChooseImage, btnCaptureImage, btnSubmit, btnViewComplaints;
     private Uri selectedImageUri;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -44,6 +41,8 @@ public class StudentComplaints extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final int CAPTURE_IMAGE = 2;
     private static final int PERMISSION_CODE = 100;
+
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +59,20 @@ public class StudentComplaints extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btn_submit);
         btnViewComplaints = findViewById(R.id.btn_view_complaints);
 
-
-        btnViewComplaints.setOnClickListener(new View.OnClickListener() {
-
+        backButton=findViewById(R.id.m_menu);
+        // Handle back button click
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StudentComplaints.this, ComplaintActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
+
+        btnViewComplaints.setOnClickListener(view -> {
+            Intent intent = new Intent(StudentComplaints.this, ComplaintActivity.class);
+            startActivity(intent);
+        });
+
         storageReference = FirebaseStorage.getInstance().getReference("complaint_images");
         databaseReference = FirebaseDatabase.getInstance().getReference("complaints");
 
@@ -82,14 +86,47 @@ public class StudentComplaints extends AppCompatActivity {
         btnSubmit.setOnClickListener(v -> uploadComplaintData());
     }
 
-    // ✅ Request Permissions if Needed
+    // ✅ Properly Check Permissions
     private void checkPermissions(int requestType) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, PERMISSION_CODE);
-        } else {
-            if (requestType == PICK_IMAGE) selectImageFromGallery();
-            else captureImageFromCamera();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+ requires READ_MEDIA_IMAGES
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.CAMERA}, PERMISSION_CODE);
+            } else {
+                proceedWithAction(requestType);
+            }
+        } else { // For Android 12 and below
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, PERMISSION_CODE);
+            } else {
+                proceedWithAction(requestType);
+            }
+        }
+    }
+
+    // ✅ Handle Permission Request Results
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_CODE) {
+            boolean permissionGranted = true;
+
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    permissionGranted = false;
+                    break;
+                }
+            }
+
+            if (permissionGranted) {
+                Toast.makeText(this, "Permissions Granted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permissions Denied! Please grant permissions from settings.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -103,19 +140,6 @@ public class StudentComplaints extends AppCompatActivity {
     private void captureImageFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAPTURE_IMAGE);
-    }
-
-    // ✅ Handle Permission Request Result
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permissions Granted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permissions Denied!", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     // ✅ Handle Image Selection and Camera Capture
@@ -177,7 +201,7 @@ public class StudentComplaints extends AppCompatActivity {
                     saveComplaintToDatabase(title, description, complaintType, uri.toString());
                 }))
                 .addOnFailureListener(e -> {
-                    progressDialog.dismiss(); // Dismiss dialog on failure
+                    progressDialog.dismiss();
                     Toast.makeText(StudentComplaints.this, "Image Upload Failed!", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -185,7 +209,6 @@ public class StudentComplaints extends AppCompatActivity {
     // ✅ Save Complaint Data to Firebase Database
     private void saveComplaintToDatabase(String title, String description, String complaintType, String imageUrl) {
         String complaintId = databaseReference.push().getKey();
-
         HashMap<String, Object> complaintData = new HashMap<>();
         complaintData.put("complaintId", complaintId);
         complaintData.put("title", title);
@@ -195,12 +218,16 @@ public class StudentComplaints extends AppCompatActivity {
 
         databaseReference.child(complaintId).setValue(complaintData)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(StudentComplaints.this, "Complaint Submitted!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(StudentComplaints.this, "Submission Failed!", Toast.LENGTH_SHORT).show();
-                    }
+                    progressDialog.dismiss();
+                    Toast.makeText(this, "Complaint Submitted!", Toast.LENGTH_SHORT).show();
+                    finish();
                 });
+    }
+    private void proceedWithAction(int requestType) {
+        if (requestType == PICK_IMAGE) {
+            selectImageFromGallery();
+        } else if (requestType == CAPTURE_IMAGE) {
+            captureImageFromCamera();
+        }
     }
 }

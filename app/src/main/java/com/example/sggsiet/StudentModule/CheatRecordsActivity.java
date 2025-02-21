@@ -2,6 +2,8 @@ package com.example.sggsiet.StudentModule;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import java.util.List;
 public class CheatRecordsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private ImageView backButton;
     private CheatRecordAdapter adapter;
     private List<CheatRecord> cheatRecords;
     private DatabaseReference cheatRecordsRef;
@@ -33,6 +36,16 @@ public class CheatRecordsActivity extends AppCompatActivity {
         cheatRecords = new ArrayList<>();
         adapter = new CheatRecordAdapter(this, cheatRecords);
         recyclerView.setAdapter(adapter);
+
+        backButton=findViewById(R.id.m_back);
+        // Handle back button click
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         cheatRecordsRef = FirebaseDatabase.getInstance().getReference("CheatRecords");
 

@@ -90,6 +90,8 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(this, "Invalid email for selected role", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+
             generateAndSendOtp(phoneNumber);
         }
     }
