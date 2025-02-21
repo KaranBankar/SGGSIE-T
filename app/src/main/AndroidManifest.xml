@@ -46,8 +46,10 @@
         <activity android:name=".DisplayElectionPositions" android:exported="true" />
         <activity android:name=".AdminModule.PrincipalDashboard" android:exported="true" />
         <activity android:name=".FacultyModuleActivity" android:exported="true" />
-        <activity android:name=".StudentModule.BudgetRequestTracking" android:exported="true" />
-        <activity android:name=".StudentModule.BudgetRequestSubmission" android:exported="true" />
+        <activity android:name=".StudentModule.BudgetRequestTracking" android:exported="true"
+            android:theme="@style/Base.Theme.SGGSIET"/>
+        <activity android:name=".StudentModule.BudgetRequestSubmission" android:exported="true"
+            android:theme="@style/Base.Theme.SGGSIET"/>
 
         <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
