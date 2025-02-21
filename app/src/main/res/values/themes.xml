@@ -5,6 +5,12 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="Theme.YourApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Other styles -->
+
+    </style>
+
+
     <style name="Theme.SGGSIET" parent="Base.Theme.SGGSIET" />
     <style name="ToolbarTitleStyle">
         <item name="android:fontFamily">sans-serif</item>

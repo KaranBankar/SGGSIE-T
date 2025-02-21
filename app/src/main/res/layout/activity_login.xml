@@ -40,9 +40,10 @@
     <!-- Dropdown (Login Type) -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         app:endIconMode="dropdown_menu">
         <AutoCompleteTextView
+            android:padding="10dp"
             android:id="@+id/spinnerLoginType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

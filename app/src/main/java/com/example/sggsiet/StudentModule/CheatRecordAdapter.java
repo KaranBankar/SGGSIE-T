@@ -39,11 +39,15 @@ public class CheatRecordAdapter extends RecyclerView.Adapter<CheatRecordAdapter.
         holder.tvSubjectName.setText("Subject: " + record.getSubjectName());
         holder.tvDate.setText("Date: " + record.getDate());
 
-        // Load Image using Glide
-        Glide.with(context)
-                .load(record.getImageUrl())
-                .placeholder(R.drawable.secure)  // Add a placeholder image
-                .into(holder.ivCheatImage);
+        // ✅ Fix: Check if imageUrl is null before loading
+        if (record.getImageUrl() != null && !record.getImageUrl().isEmpty()) {
+            Glide.with(context)
+                    .load(record.getImageUrl())
+                    .placeholder(R.drawable.secure) // ✅ Add placeholder image
+                    .into(holder.ivCheatImage);
+        } else {
+            holder.ivCheatImage.setImageResource(R.drawable.secure); // Default image if null
+        }
     }
 
     @Override

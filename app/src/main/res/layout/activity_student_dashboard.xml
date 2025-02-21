@@ -7,6 +7,7 @@
     android:id="@+id/drawer_layout_one"
     android:background="@color/light_gray"
 
+
     android:padding="12dp">
     <androidx.core.widget.NestedScrollView
         android:id="@+id/main"
@@ -72,6 +73,80 @@
                 android:src="@drawable/notification"
                 app:tint="@color/black" />
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@android:color/transparent">
+
+            <!-- Background Gradient -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center"
+                android:background="@drawable/gradient_sggs">
+
+                <!-- College Logo -->
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/app_logo"
+                    android:layout_gravity="center"
+                    android:contentDescription="SGGS Logo"
+                    android:scaleType="fitCenter" />
+
+                <!-- College Name -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SGGS Institute of Engineering &amp; Technology"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Established Year -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Established: 1981"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+
+                <!-- Location -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location: Vishnupuri, Nanded, Maharashtra"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+
+                <!-- College Motto -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Motto: 'Excellence in Technical Education'"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
         <!-- Explore Section -->
         <TextView

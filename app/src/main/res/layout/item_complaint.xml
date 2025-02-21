@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:padding="12dp"
     android:background="@color/material_grey_100">
 
-    <!-- Material CardView for better elevation and shadow -->
+    <!-- Complaint Card with Material Design -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="6dp"
-        app:strokeColor="@color/primary_blue"
-        app:strokeWidth="1dp">
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="1dp"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,50 +24,79 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title of the Complaint -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTitle"
+            <!-- Complaint Title with Icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complaint Title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:lineHeight="24sp"/>
+            </LinearLayout>
+
+            <!-- Complaint Type with Icon -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Complaint Title"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                app:lineHeight="24sp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
 
-            <!-- Description -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="6dp"
+                    app:tint="@color/primary_blue" />
+
+                <TextView
+                    android:id="@+id/tvComplaintType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complaint Type"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/gray_text"/>
+            </LinearLayout>
+
+            <!-- Description with Icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Complaint Description"
-                android:textSize="16sp"
-                android:textColor="@color/material_grey_800"
-                android:layout_marginTop="4dp"
-                app:lineHeight="22sp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
 
-            <!-- Complaint Type -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvComplaintType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Complaint Type"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                android:textColor="@color/primary_blue"
-                android:layout_marginTop="6dp"/>
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Complaint Description"
+                    android:textSize="16sp"
+                    android:textColor="@color/material_grey_800"
+                    app:lineHeight="22sp"/>
+            </LinearLayout>
 
-            <!-- Elevated Image with Rounded Corners -->
+            <!-- Complaint Image with Rounded Corners -->
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivComplaintImage"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:layout_marginTop="12dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent"
                 app:strokeColor="@color/light_blue_background"
-                app:strokeWidth="2dp"
-                app:elevation="8dp"/>
+                app:strokeWidth="1dp"/>
 
         </LinearLayout>
 

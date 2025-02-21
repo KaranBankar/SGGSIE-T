@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sggsiet.StudentModule.Event;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,7 +38,7 @@ public class UploadEvent extends AppCompatActivity {
 
     private TextInputEditText etEventName, etEventDescription, etEventDate, etEventTime, etEventLocation, etEventSeats;
     private ImageView ivEventImage;
-    private Button btnUploadImage, btnUploadEvent;
+    private MaterialButton btnUploadImage, btnUploadEvent;
     private Uri imageUri;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -153,15 +154,36 @@ public class UploadEvent extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(String name, String desc, String date, String time, String location, String seats) {
+        progressDialog.show(); // ✅ Show progress dialog before uploading
+
         StorageReference fileRef = storageReference.child(System.currentTimeMillis() + ".jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
-                fileRef.getDownloadUrl().addOnSuccessListener(uri -> saveEventToDatabase(name, desc, date, time, location, uri.toString(), seats))
-        ).addOnFailureListener(e -> progressDialog.dismiss());
+
+        fileRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot ->
+                        fileRef.getDownloadUrl().addOnSuccessListener(uri ->
+                                saveEventToDatabase(name, desc, date, time, location, uri.toString(), seats)
+                        )
+                )
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(this, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void saveEventToDatabase(String name, String desc, String date, String time, String location, String imageUrl, String seats) {
         String eventId = databaseReference.push().getKey();
         Event event = new Event(eventId, name, desc, date, time, location, imageUrl, "pending", seats, "0");
-        databaseReference.child(eventId).setValue(event).addOnCompleteListener(task -> progressDialog.dismiss());
+
+        databaseReference.child(eventId).setValue(event)
+                .addOnCompleteListener(task -> {
+                    progressDialog.dismiss(); // ✅ Hide progress dialog after database update
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Event uploaded successfully!", Toast.LENGTH_SHORT).show();
+                        onBackPressed(); // ✅ Go back after successful upload
+                    } else {
+                        Toast.makeText(this, "Failed to upload event!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 }

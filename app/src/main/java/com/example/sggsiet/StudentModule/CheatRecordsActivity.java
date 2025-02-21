@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sggsiet.R;
@@ -33,20 +35,19 @@ public class CheatRecordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat_records);
 
         recyclerView = findViewById(R.id.recyclerViewCheatRecords);
+        backButton = findViewById(R.id.m_back);
+
         cheatRecords = new ArrayList<>();
         adapter = new CheatRecordAdapter(this, cheatRecords);
+
+        // ✅ Fix: Set LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        backButton=findViewById(R.id.m_back);
         // Handle back button click
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
 
-
+        // Reference to Firebase
         cheatRecordsRef = FirebaseDatabase.getInstance().getReference("CheatRecords");
 
         loadCheatRecords();
@@ -57,12 +58,24 @@ public class CheatRecordsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 cheatRecords.clear();
-                for (DataSnapshot recordSnapshot : snapshot.getChildren()) {
-                    CheatRecord record = recordSnapshot.getValue(CheatRecord.class);
-                    if (record != null) {
-                        cheatRecords.add(record);
-                    }
+
+                 // Loop through "210", "465"
+                    for (DataSnapshot recordSnapshot : snapshot.getChildren()) { // Loop through actual records
+                        if (recordSnapshot.exists() && recordSnapshot.hasChildren()) { // ✅ Ensure it's an object
+                            CheatRecord record = recordSnapshot.getValue(CheatRecord.class);
+                            if (record != null) {
+                                cheatRecords.add(record);
+                            }
+                        } else {
+                            Log.e("Firebase", "Skipping invalid record: " + recordSnapshot.getKey());
+                        }
+
                 }
+
+                if (cheatRecords.isEmpty()) {
+                    Toast.makeText(CheatRecordsActivity.this, "No records found", Toast.LENGTH_SHORT).show();
+                }
+
                 adapter.notifyDataSetChanged();
             }
 
@@ -72,4 +85,5 @@ public class CheatRecordsActivity extends AppCompatActivity {
             }
         });
     }
+
 }

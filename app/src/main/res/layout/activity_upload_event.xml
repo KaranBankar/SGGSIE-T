@@ -97,12 +97,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Upload Image Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnUploadImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Event Image"
-        android:backgroundTint="@color/black"/>
+        android:text="Upload Event"
+        android:textColor="@android:color/white"
+        android:background="@drawable/gradient_bg_blue"
+        android:backgroundTint="@android:color/transparent"
+        android:backgroundTintMode="screen"
+        app:cornerRadius="8dp"
+        android:layout_marginTop="16dp"/>
 
     <!-- Image Preview -->
     <ImageView
@@ -115,11 +120,15 @@
         android:src="@android:drawable/ic_menu_gallery"/>
 
     <!-- Upload Event Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnUploadEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Upload Event"
-        android:backgroundTint="@color/primary_blue"
+        android:textColor="@android:color/white"
+        android:background="@drawable/gradient_bg_blue"
+        android:backgroundTint="@android:color/transparent"
+        android:backgroundTintMode="screen"
+        app:cornerRadius="8dp"
         android:layout_marginTop="16dp"/>
 </LinearLayout>
