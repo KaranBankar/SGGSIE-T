@@ -79,7 +79,7 @@ public class StudentDashboard extends AppCompatActivity {
         cardVoteNow.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, VotingActivity.class)));
         cardHealthReport.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, HealthReportActivity.class)));
         cardCheatRecords.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, CheatRecordsActivity.class)));
-        cardBudget.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, BudgetRequestTracking.class)));
+        cardBudget.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, BudgetRequestSubmission.class)));
     }
 
     // Load student details from SharedPreferences into UI
