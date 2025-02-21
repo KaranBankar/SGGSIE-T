@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sggsiet.R;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class VotingActivity extends AppCompatActivity {
     private MaterialButton buttonCancelApplication;
 
     private String userEnrollmentNo, userName, userEmail;
-    private Button votingpage;
+    private MaterialButton votingpage;
     private String appliedPosition = null; // Stores applied position name
 
     @Override
@@ -171,5 +172,12 @@ public class VotingActivity extends AppCompatActivity {
             fetchPositions();
             Toast.makeText(this, "Application Cancelled!", Toast.LENGTH_SHORT).show();
         }
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            onBackPressed(); // Go back when clicking back arrow
+        });
     }
+
+
 }

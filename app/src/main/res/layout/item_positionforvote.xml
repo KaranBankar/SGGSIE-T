@@ -16,11 +16,17 @@
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
 
-    <TextView
-        android:id="@+id/textCandidatesList"
+    <RadioGroup
+        android:id="@+id/radioGroupCandidates"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonVote"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Candidates"
-        android:textSize="16sp"
-        android:textColor="@android:color/darker_gray" />
+        android:text="Vote"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_gravity="center"/>
 </LinearLayout>

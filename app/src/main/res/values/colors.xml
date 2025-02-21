@@ -15,10 +15,14 @@
     <color name="light_gray">#F5F5F5</color>
 
     <color name="primary">#193050FE</color>
+    <color name="soft_blue">#E3F2FD</color>
+    <color name="soft_gray">#F5F5F5</color>
+
 
     <color name="icon_bg">#E3E8FF</color>
     <color name="green">#6EEA63</color>
     <color name="ios_blue">#007AFF</color> <!-- iOS-style blue -->
     <color name="ios_green">#34C759</color>
-    <color name="red">#FF5741</color> <!-- iOS-style green -->
+    <color name="red">#FF5741</color>
+    <color name="teal_700">#000000</color> <!-- iOS-style green -->
 </resources>
