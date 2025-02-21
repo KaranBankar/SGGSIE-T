@@ -12,6 +12,22 @@
     </string-array>
 
 
+
+
+    <string-array name="request_types">
+        <item>Event Organization</item>
+        <item>Sponsorship Request</item>
+        <item>Equipment Purchase</item>
+        <item>Conference/Workshop Fees</item>
+        <item>Travel Allowance</item>
+        <item>Marketing &amp; Promotions</item>
+        <item>Printing &amp; Stationery</item>
+        <item>Catering &amp; Refreshments</item>
+        <item>Software &amp; Licenses</item>
+        <item>Miscellaneous Expenses</item>
+    </string-array>
+
+
     <string name="open_drawer">Open Navigation Drawer</string>
     <string name="close_drawer">Close Navigation Drawer</string>
 </resources>
