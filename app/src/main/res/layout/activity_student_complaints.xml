@@ -8,16 +8,56 @@
     android:background="@color/background_blue">
 
     <!-- Top Toolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/header_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/ios_blue"
-        app:title="Submit Complaint"
-        app:titleTextColor="@android:color/black"
-        app:navigationIconTint="@color/primary_blue"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextAppearance="@style/ToolbarTitleStyle" />
+        android:background="@color/white"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:elevation="4dp"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:id="@+id/m_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/m_back"
+            android:background="@drawable/circle_background"
+            android:padding="6dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="12dp">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Complaints"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvUserDepartment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit and View Complaints"
+                android:textSize="14sp"
+                android:textColor="@color/gray_text" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/notification"
+            app:tint="@color/black" />
+    </LinearLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_view_complaints"
         android:layout_width="match_parent"

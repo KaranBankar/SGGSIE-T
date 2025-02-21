@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,8 @@ public class EventsActivity extends AppCompatActivity {
     private List<Event> eventList;
     private DatabaseReference databaseReference;
 
+    private ImageView backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,15 @@ public class EventsActivity extends AppCompatActivity {
         eventList = new ArrayList<>();
         eventsAdapter = new EventsAdapter(this, eventList);
         recyclerView.setAdapter(eventsAdapter);
+
+        backButton=findViewById(R.id.m_menu);
+        // Handle back button click
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         btnMyBookings.setOnClickListener(v -> {
             startActivity(new Intent(EventsActivity.this, MyBookingsActivity.class));

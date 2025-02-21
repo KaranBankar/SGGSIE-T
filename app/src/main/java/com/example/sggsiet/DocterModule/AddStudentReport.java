@@ -2,9 +2,7 @@ package com.example.sggsiet.DocterModule;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sggsiet.R;
@@ -29,7 +27,7 @@ public class AddStudentReport extends AppCompatActivity {
     private MaterialButton btnSubmitComplaint;
     private DatabaseReference complaintsRef;
     private StorageReference csvStorageRef;
-    private ProgressDialog progressDialog;  // Progress Dialog for loading
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class AddStudentReport extends AppCompatActivity {
             return;
         }
 
-        // Show Progress Dialog while searching
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Searching Student...");
         progressDialog.setCancelable(false);
@@ -86,15 +83,14 @@ public class AddStudentReport extends AppCompatActivity {
                         studentDetails.put("enrollmentno", parts[0]);
                         studentDetails.put("department", parts[3]);
                         studentDetails.put("year", parts[4]);
-                        studentDetails.put("mobile", parts[5]);
-                        studentDetails.put("emergencycontact", parts[6]);
+                        studentDetails.put("studentMobile", parts[5]); // Storing student mobile
                         studentDetails.put("position", parts[7]);
                         found = true;
                         break;
                     }
                 }
 
-                progressDialog.dismiss(); // Hide progress dialog
+                progressDialog.dismiss();
 
                 if (found) {
                     showSubmissionDialog(studentDetails, healthIssue, description);
@@ -114,10 +110,6 @@ public class AddStudentReport extends AppCompatActivity {
     }
 
     private void showSubmissionDialog(HashMap<String, String> studentDetails, String healthIssue, String description) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Submitting Report");
-        builder.setMessage("Submitting Health Report...");
-
         ProgressDialog submitProgressDialog = new ProgressDialog(this);
         submitProgressDialog.setMessage("Submitting Health Report...");
         submitProgressDialog.setCancelable(false);
@@ -152,8 +144,8 @@ public class AddStudentReport extends AppCompatActivity {
     }
 
     private void showErrorDialog(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
+        new AlertDialog.Builder(this)
+                .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                 .setCancelable(false)
@@ -161,8 +153,8 @@ public class AddStudentReport extends AppCompatActivity {
     }
 
     private void showSuccessDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Success")
+        new AlertDialog.Builder(this)
+                .setTitle("Success")
                 .setMessage("Complaint submitted successfully!")
                 .setPositiveButton("OK", (dialog, which) -> finish())
                 .setCancelable(false)

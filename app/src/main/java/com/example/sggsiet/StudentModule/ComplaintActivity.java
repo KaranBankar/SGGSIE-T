@@ -1,6 +1,8 @@
 package com.example.sggsiet.StudentModule;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,8 @@ public class ComplaintActivity extends AppCompatActivity {
     private List<Complaint> complaintList;
     private DatabaseReference databaseReference;
 
+    private ImageView backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,15 @@ public class ComplaintActivity extends AppCompatActivity {
         complaintList = new ArrayList<>();
         complaintAdapter = new ComplaintAdapter(this, complaintList);
         recyclerViewComplaints.setAdapter(complaintAdapter);
+
+        backButton=findViewById(R.id.m_menu);
+        // Handle back button click
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("complaints");
         fetchComplaints();
