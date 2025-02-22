@@ -104,5 +104,8 @@
         <activity android:name=".DisplayElectionPositions" android:exported="true" />
         <activity android:name=".UploadEvent" android:exported="true" />
         <activity android:name=".SubmitComplaint" android:exported="true" />
+        <activity android:name=".AdminModule.AdmissionModule" android:exported="true"/>
+        <activity android:name=".AdminModule.ExamModule" android:exported="true"/>
+        <activity android:name=".AdminModule.NotificationModule" android:exported="true"/>
     </application>
 </manifest>
