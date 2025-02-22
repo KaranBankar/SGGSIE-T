@@ -69,11 +69,11 @@ public class BudgetRequestSubmission extends AppCompatActivity {
         enrollmentNo = sharedPreferences.getString("enrollmentNo", ""); // Default is empty
         studentName = sharedPreferences.getString("studentName", ""); // Default is empty
 
-        if (TextUtils.isEmpty(enrollmentNo) || TextUtils.isEmpty(studentName)) {
-            Toast.makeText(this, "User details not found. Please log in again.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+//        if (TextUtils.isEmpty(enrollmentNo) || TextUtils.isEmpty(studentName)) {
+//            Toast.makeText(this, "User details not found. Please log in again.", Toast.LENGTH_LONG).show();
+//            finish();
+//            return;
+//        }
 
         // Initialize spinner with options
         String[] requestTypes = { "Event Budget", "Sponsorship", "Equipment Purchase", "Travel Grant", "Other"};
