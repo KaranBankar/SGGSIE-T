@@ -83,7 +83,7 @@ public class StudentDashboard extends AppCompatActivity {
         cardCheatRecords.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, CheatRecordsActivity.class)));
         cardBudget.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, BudgetRequestSubmission.class)));
         carddoubt.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Doubt.class)));
-        cardnotice.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Notice.class)));
+        cardnotice.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Facilities.class)));
 
 
     }

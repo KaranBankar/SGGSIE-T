@@ -1,10 +1,13 @@
 package com.example.sggsiet.StudentModule;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,8 @@ public class ChatActivity extends AppCompatActivity {
     private ImageView selectImageBtn;
     private Button sendBtn;
 
+    private  String studentName,studentEmail;
+
     private static final int PICK_IMAGE = 1;
     private Uri imageUri;
 
@@ -38,8 +43,12 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference chatRef;
     private StorageReference storageRef;
 
-    private String facultyName, studentName;
-    private ProgressDialog progressDialog;  // ProgressDialog for showing loading
+    private String facultyName;
+    private ProgressDialog progressDialog;
+
+    private static final String PREF_NAME = "UserPrefs";
+    private static final String KEY_STUDENT_NAME = "studentName";
+// ProgressDialog for showing loading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +62,10 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         facultyName = intent.getStringExtra("faculty_name");
-        studentName = "Student"; // Fetch actual student name from SharedPreferences
-
+        // Fetch actual student name from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        studentName = sharedPreferences.getString(KEY_STUDENT_NAME, "Student");
+        studentEmail = sharedPreferences.getString("studentEmail", "Student");
         String safeFacultyName = facultyName.replace(".", "_"); // Replace dots with underscores
         chatRef = FirebaseDatabase.getInstance().getReference("Chats").child(safeFacultyName);
         storageRef = FirebaseStorage.getInstance().getReference("ChatImages");
@@ -82,15 +93,21 @@ public class ChatActivity extends AppCompatActivity {
                 messageList.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Message msg = data.getValue(Message.class);
-                    messageList.add(msg);
+
+                    if (msg != null && msg.getEmail() != null && msg.getEmail().equals(studentEmail)) {
+                        messageList.add(msg); // Add only messages of the logged-in student
+                    }
                 }
                 chatAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseChat", "Failed to load messages: " + error.getMessage());
+            }
         });
     }
+
 
     private void sendMessage() {
         String text = messageInput.getText().toString().trim();
@@ -105,7 +122,7 @@ public class ChatActivity extends AppCompatActivity {
         if (imageUri != null) {
             uploadImageToFirebase(key, text);
         } else {
-            chatRef.child(key).setValue(new Message(text, null, studentName, new Date().getTime()));
+            chatRef.child(key).setValue(new Message(text, null, studentName, new Date().getTime(),studentEmail));
             messageInput.setText("");  // Clear text input after sending
         }
     }
@@ -122,7 +139,7 @@ public class ChatActivity extends AppCompatActivity {
 
         imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    chatRef.child(key).setValue(new Message(text, uri.toString(), studentName, new Date().getTime()));
+                    chatRef.child(key).setValue(new Message(text, uri.toString(), studentName, new Date().getTime(),studentEmail));
                     progressDialog.dismiss();  // Hide ProgressDialog
                     imageUri = null;
                     messageInput.setText("");  // Clear text input

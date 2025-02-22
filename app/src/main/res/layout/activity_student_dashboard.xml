@@ -517,14 +517,14 @@
                         <ImageView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:src="@drawable/m_notice"
+                            android:src="@drawable/m_facility"
                             android:layout_gravity="center"
                             app:tint="#3F51B5" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Notices"
+                            android:text="Facilities"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"
                             android:textStyle="bold"

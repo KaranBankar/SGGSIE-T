@@ -49,7 +49,7 @@
                 android:id="@+id/tvUserDepartment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View Your Reports &amp; Download "
+                android:text="View Your Reports &amp; Download"
                 android:textSize="14sp"
                 android:textColor="@color/gray_text" />
         </LinearLayout>
@@ -61,19 +61,110 @@
             app:tint="@color/black" />
     </LinearLayout>
 
-    <!-- No Reports Message -->
-    <TextView
-        android:id="@+id/tv_no_reports"
-        android:layout_width="wrap_content"
+    <!-- Feature CardView (Book Appointment & Emergency Service) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_health_services"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No Reports Found"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone"
+        android:layout_margin="16dp"
+        android:padding="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/header_section"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <!-- Book Appointment Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_book_appointment"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:background="@drawable/gradient_bg"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:background="@drawable/gradient_bg_green"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/m_book"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book Appointment"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:paddingTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Emergency Service Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_emergency_service"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_bg_red"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/m_emergency"
+                        app:tint="@color/white"
+                       />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Emergency Service"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:paddingTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- RecyclerView for Reports -->
     <androidx.recyclerview.widget.RecyclerView
@@ -82,7 +173,7 @@
         android:layout_height="0dp"
         android:padding="10dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@id/header_section"
+        app:layout_constraintTop_toBottomOf="@id/card_health_services"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

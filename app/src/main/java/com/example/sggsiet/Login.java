@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.sggsiet.AdminModule.PrincipalDashboard;
 import com.example.sggsiet.DocterModule.DocterDashboard;
+import com.example.sggsiet.StudentModule.GardLogin;
 import com.example.sggsiet.StudentModule.StudentDashboard;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -36,7 +37,7 @@ public class Login extends AppCompatActivity {
     private AutoCompleteTextView spinnerLoginType;
     private EditText etEmail, etOtp;
     private MaterialButton btnLogin;
-    private MaterialTextView btnGetOtp;
+    private MaterialTextView btnGetOtp,tvgard;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
     private SharedPreferences sharedPreferences;
@@ -58,6 +59,14 @@ public class Login extends AppCompatActivity {
         etOtp = findViewById(R.id.etOtp);
         btnLogin = findViewById(R.id.btnLogin);
         btnGetOtp = findViewById(R.id.tvGetOtp);
+        tvgard=findViewById(R.id.gardtv);
+
+        tvgard.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, GardLogin.class);
+            startActivity(intent);
+
+
+                });
 
         String[] userTypes = {"Administration", "Faculty", "Doctor", "Student"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, userTypes);
@@ -225,9 +234,9 @@ public class Login extends AppCompatActivity {
 
     private void saveStudentDetailsToPreferences(String[] columns) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("studentEmail", columns[0]);
+        editor.putString("studentEmail", columns[2]);
         editor.putString("studentName", columns[1]);
-        editor.putString("studentMobile", columns[2]);
+        editor.putString("studentMobile", columns[5]);
         editor.putString("studentDept", columns[3]);
         editor.apply();
     }
