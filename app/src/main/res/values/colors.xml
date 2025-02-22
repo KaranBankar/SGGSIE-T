@@ -23,5 +23,7 @@
     <color name="ios_green">#34C759</color>
     <color name="red">#FF5741</color>
     <color name="teal_700">#000000</color>
+    <color name="statusColor">#F8FFFC</color>
+    <color name="yellow">#EEFF00</color>
     <!--  iOS-style green  -->
 </resources>

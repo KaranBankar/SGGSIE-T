@@ -26,6 +26,7 @@ public class ComplaintActivity extends AppCompatActivity {
     private List<Complaint> complaintList;
     private DatabaseReference databaseReference;
 
+
     private ImageView backButton;
 
     @Override

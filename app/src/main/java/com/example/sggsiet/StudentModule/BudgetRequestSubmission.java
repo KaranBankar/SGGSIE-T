@@ -153,12 +153,39 @@ public class BudgetRequestSubmission extends AppCompatActivity {
         }
     }
 
-    private void saveRequest(String requestId, String requestType, String title, String description,String fundsamount, String attachmentUrl, String status) {
-        BudgetRequest request = new BudgetRequest(requestId, enrollmentNo, studentName, requestType, title, description,fundsamount, attachmentUrl, status, System.currentTimeMillis());
+    private void saveRequest(String requestId, String requestType, String title, String description, String fundsamount, String attachmentUrl, String status) {
+        int requestedFunds = Integer.parseInt(fundsamount);
+
+        // Create a new request object
+        BudgetRequest request = new BudgetRequest(requestId, enrollmentNo, studentName, requestType, title, description, fundsamount, attachmentUrl, status, System.currentTimeMillis());
+
+        // Store request in "BudgetRequests" node
         databaseReference.child(requestId).setValue(request).addOnCompleteListener(task -> {
-            progressDialog.dismiss();
-            Toast.makeText(this, task.isSuccessful() ? "Request submitted successfully" : "Submission failed", Toast.LENGTH_SHORT).show();
-            if (task.isSuccessful()) finish();
+            if (task.isSuccessful()) {
+                // Update total funds for the request type
+                updateTotalFunds(requestType, requestedFunds);
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(this, "Submission failed", Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    // Method to update total funds in FundsSummary node
+    private void updateTotalFunds(String requestType, int requestedFunds) {
+        DatabaseReference fundsSummaryRef = FirebaseDatabase.getInstance().getReference("FundsSummary").child(requestType);
+
+        fundsSummaryRef.child("totalFunds").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                int currentFunds = task.getResult().getValue(Integer.class);
+                fundsSummaryRef.child("totalFunds").setValue(currentFunds + requestedFunds);
+            } else {
+                fundsSummaryRef.child("totalFunds").setValue(requestedFunds); // If category doesn't exist, initialize it
+            }
+        });
+
+        progressDialog.dismiss();
+        Toast.makeText(this, "Request submitted successfully", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
