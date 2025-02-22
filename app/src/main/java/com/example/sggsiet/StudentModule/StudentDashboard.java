@@ -72,6 +72,8 @@ public class StudentDashboard extends AppCompatActivity {
         MaterialCardView cardHealthReport = findViewById(R.id.card_health);
         MaterialCardView cardCheatRecords = findViewById(R.id.card_cheat);
         MaterialCardView cardBudget = findViewById(R.id.card_budget);
+        MaterialCardView carddoubt = findViewById(R.id.card_doubt);
+        MaterialCardView cardnotice = findViewById(R.id.card_notice);
 
         // Set onClick listeners for navigation
         cardEvents.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, EventsActivity.class)));
@@ -80,6 +82,10 @@ public class StudentDashboard extends AppCompatActivity {
         cardHealthReport.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, HealthReportActivity.class)));
         cardCheatRecords.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, CheatRecordsActivity.class)));
         cardBudget.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, BudgetRequestSubmission.class)));
+        carddoubt.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Doubt.class)));
+        cardnotice.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Notice.class)));
+
+
     }
 
     // Load student details from SharedPreferences into UI
