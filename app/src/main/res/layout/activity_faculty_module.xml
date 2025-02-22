@@ -8,304 +8,424 @@
     android:background="@color/background_blue"
     tools:context=".FacultyModuleActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main"
         android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Prof. Vishal Bankar"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:layout_marginTop="10dp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Computer Science Engineering"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="15dp"
-                        android:textStyle="bold"/>
-
-
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Explore"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            app:cardElevation="10dp"
-            android:backgroundTint="@color/white">
+            android:scrollbars="none">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <!-- Header Section -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@android:color/transparent">
 
+                <!-- Background Gradient -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:background="@drawable/gradient_sggs">
+
+                    <!-- College Logo -->
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/app_logo"
+                        android:layout_gravity="center"
+                        android:contentDescription="SGGS Logo"
+                        android:scaleType="fitCenter" />
+
+                    <!-- College Name -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SGGS Institute of Engineering &amp; Technology"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp" />
+
+                    <!-- Established Year -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Established: 1981"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp" />
+
+                    <!-- Location -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location: Vishnupuri, Nanded, Maharashtra"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp" />
+
+                    <!-- College Motto -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Motto: 'Excellence in Technical Education'"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notice"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:layout_margin="10dp"/>
+
+
+            <!-- Explore Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Cards Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="155dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="10dp"
-                    app:cardElevation="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/layout_event_aprove"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#17A5090C"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="115dp"
-                            android:layout_height="130dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/event"/>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Events"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:layout_gravity="center"
-
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="155dp"
-                    android:layout_height="170dp"
-                    android:layout_marginTop="10dp"
-                    app:cardElevation="10dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#16234BFF"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="115dp"
-                            android:layout_height="117dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/complain" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Complaints"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-
-
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-                <LinearLayout
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:columnCount="2"
+                    android:rowCount="3"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
+                    <!-- Card Item Template -->
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="155dp"
-                        android:layout_height="170dp"
-                        android:id="@+id/Election_conduct"
-                        android:layout_margin="10dp"
-                        app:cardElevation="10dp">
+                        android:id="@+id/layoutEventAprove"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#1722F59A"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="115dp"
-                                android:layout_height="120dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/vote"/>
+                                android:src="@drawable/event"
+                                app:tint="@color/teal_700" />
 
-                            <com.google.android.material.textview.MaterialTextView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Events"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+
+                        </LinearLayout>
+
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@color/teal_700"
+                            android:layout_gravity="bottom" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Complaint Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_complains"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/complain"
+                                android:layout_gravity="center"
+                                app:tint="@color/red" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Complaint"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@color/red"
+                            android:layout_gravity="bottom" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Vote Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/ElectionConduct"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/budget"
+                                android:layout_gravity="center"
+                                app:tint="#00BCD4" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Elections"
-                                android:textColor="@color/black"
-                                android:textSize="20dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_gravity="center"
-                                android:textStyle="bold"/>
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+
                         </LinearLayout>
 
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="#00BCD4"
+                            android:layout_gravity="bottom" />
 
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Health Report Card -->
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="155dp"
-                        android:layout_height="170dp"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/health_report"
-                        app:cardElevation="10dp"
-                       >
+                        android:id="@+id/healthReport"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#19FFC700"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <ImageView
-                                android:layout_width="115dp"
-                                android:layout_height="120dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/m_health"
                                 android:layout_gravity="center"
-                                android:src="@drawable/healthold"/>
+                                app:tint="@color/green" />
 
-                            <com.google.android.material.textview.MaterialTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Health Report"
-                                android:textColor="@color/black"
-                                android:textSize="20dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:textStyle="bold"/>
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
                         </LinearLayout>
 
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@color/green"
+                            android:layout_gravity="bottom" />
 
                     </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                    <!-- Cheat Records Card -->
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="155dp"
-                        android:layout_height="170dp"
-                        android:layout_margin="10dp"
-                        android:id="@+id/Cheat_Records"
-                        app:cardElevation="10dp">
+                        android:id="@+id/CheatRecords"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#16FF4F75"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <ImageView
-                                android:layout_width="115dp"
-                                android:layout_height="130dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/m_cheat"
                                 android:layout_gravity="center"
-                                android:src="@drawable/cheat"/>
+                                app:tint="#4187FF" />
 
-                            <com.google.android.material.textview.MaterialTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Cheat Records"
-                                android:textColor="@color/black"
-                                android:layout_marginTop="10dp"
-                                android:textSize="20dp"
-                                android:layout_gravity="center"
-                                android:textStyle="bold"/>
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
                         </LinearLayout>
 
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="#4187FF"
+                            android:layout_gravity="bottom" />
 
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Budget Card -->
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="155dp"
-                        android:layout_height="170dp"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/leave_application"
-                        app:cardElevation="10dp">
+                        android:id="@+id/leaveApplication"
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="12dp"
+                        android:backgroundTint="@android:color/white">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#198352EC"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <ImageView
-                                android:layout_width="115dp"
-                                android:layout_height="130dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/leavereq"
                                 android:layout_gravity="center"
-                                android:src="@drawable/feedback"/>
+                                app:tint="#3F51B5" />
 
-                            <com.google.android.material.textview.MaterialTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Leave Appli."
-                                android:textColor="@color/black"
-                                android:textSize="20dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:textStyle="bold"/>
+                                android:text="Leave"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
                         </LinearLayout>
 
+                        <!-- Bottom Border -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="#3F51B5"
+                            android:layout_gravity="bottom" />
 
                     </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
+
+                </GridLayout>
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
+            <!-- Notice Board -->
 
-            </LinearLayout>
+        </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
-
-
 
 
     <com.google.android.material.navigation.NavigationView
@@ -317,7 +437,5 @@
         app:menu="@menu/nav_drawer_menu"
         android:layout_marginBottom="20dp"
         app:headerLayout="@layout/nav_header" />
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

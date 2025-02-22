@@ -21,6 +21,7 @@ import com.example.sggsiet.FacultyModule.AproveEvents
 import com.example.sggsiet.FacultyModule.FacultyCheatRecordsActivity
 import com.example.sggsiet.FacultyModule.FacultyHealthReportActivity
 import com.example.sggsiet.FacultyModule.FacultyLeaveApplicationActivity
+import com.example.sggsiet.FacultyModule.SolveDoubt
 import com.example.sggsiet.databinding.ActivityFacultyModuleBinding
 import com.example.sggsiet.dataclasses.CheatRecord
 import com.google.firebase.FirebaseApp
@@ -78,7 +79,7 @@ class FacultyModuleActivity : AppCompatActivity() {
         }
 
         binding.healthReport.setOnClickListener{
-            val i = Intent(this, FacultyHealthReportActivity::class.java)
+            val i = Intent(this, SolveDoubt::class.java)
             startActivity(i)
         }
 
