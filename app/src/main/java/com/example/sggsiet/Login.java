@@ -238,6 +238,8 @@ public class Login extends AppCompatActivity {
         editor.putString("studentName", columns[1]);
         editor.putString("studentMobile", columns[5]);
         editor.putString("studentDept", columns[3]);
+        editor.putString("enrollmentNo", columns[0]);
+        editor.putString("studentDepartment", columns[0]);
         editor.apply();
     }
 

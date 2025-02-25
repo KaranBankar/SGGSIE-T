@@ -541,6 +541,97 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_leave_request"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_columnWeight="1"
+                    android:layout_weight="1"
+                    app:cardElevation="4dp"
+                    app:cardCornerRadius="12dp"
+                    android:backgroundTint="@android:color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/m_leave"
+                            android:layout_gravity="center"
+                            app:tint="#3F51B5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Leave Request"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <!-- Bottom Border -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="#3F51B5"
+                        android:layout_gravity="bottom"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_notice_orig"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_columnWeight="1"
+                    android:layout_weight="1"
+                    app:cardElevation="4dp"
+                    app:cardCornerRadius="12dp"
+                    android:backgroundTint="@android:color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="55dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/m_notice"
+                            app:tint="#3F51B5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notices"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <!-- Bottom Border -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="#3F51B5"
+                        android:layout_gravity="bottom"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
                 <!-- Add other cards in the same format -->
 
             </GridLayout>
@@ -551,26 +642,9 @@
 
         </LinearLayout>
 
-        <!-- Notice Board -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Notice Board"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="16dp"
-            android:paddingBottom="4dp"
-            android:background="@color/light_gray" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/white"
-            android:padding="8dp"/>
+
+
 
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>

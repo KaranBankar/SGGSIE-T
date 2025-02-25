@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.sggsiet.AdminModule.BudgetOverview;
 import com.example.sggsiet.Login;
 import com.example.sggsiet.R;
 import com.google.android.material.card.MaterialCardView;
@@ -74,6 +75,8 @@ public class StudentDashboard extends AppCompatActivity {
         MaterialCardView cardBudget = findViewById(R.id.card_budget);
         MaterialCardView carddoubt = findViewById(R.id.card_doubt);
         MaterialCardView cardnotice = findViewById(R.id.card_notice);
+        MaterialCardView cardleave = findViewById(R.id.card_leave_request);
+        MaterialCardView cardnoticeori = findViewById(R.id.card_notice_orig);
 
         // Set onClick listeners for navigation
         cardEvents.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, EventsActivity.class)));
@@ -84,6 +87,9 @@ public class StudentDashboard extends AppCompatActivity {
         cardBudget.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, BudgetRequestSubmission.class)));
         carddoubt.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Doubt.class)));
         cardnotice.setOnClickListener(v -> startActivity(new Intent(StudentDashboard.this, Facilities.class)));
+        cardleave.setOnClickListener(v->startActivity(new Intent(StudentDashboard.this,StudentLeaveNotificationActivity.class)));
+        cardnoticeori.setOnClickListener(v->startActivity(new Intent(StudentDashboard.this,NoticeActivity.class)));
+
 
 
     }

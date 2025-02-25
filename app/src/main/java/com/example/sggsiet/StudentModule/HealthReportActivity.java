@@ -30,9 +30,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sggsiet.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +44,12 @@ import java.util.Locale;
 
 public class HealthReportActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+
+    private HealthReportAdapter adapter;
+    private List<HealthReportModel> reportList;
     private DatabaseReference databaseReference;
+    private String loggedInStudentEmail;
+
     private String studentName, studentEmail;
     private static final int PERMISSION_REQUEST_CODE = 100;
     private LocationManager locationManager;
@@ -55,11 +64,18 @@ public class HealthReportActivity extends AppCompatActivity {
         studentName = prefs.getString("studentName", "");
         studentEmail = prefs.getString("studentEmail", "");
 
+
+
         recyclerView = findViewById(R.id.recycler_health_reports);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        databaseReference = FirebaseDatabase.getInstance().getReference("SGGSIE&T").child("appointments");
+        databaseReference = FirebaseDatabase.getInstance().getReference("SGGSIE&T").child("healthreports");
+        reportList = new ArrayList<>();
+        adapter = new HealthReportAdapter(this, reportList);
+        recyclerView.setAdapter(adapter);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        fetchHealthReports();
 
         // Book Appointment Card Click
         MaterialCardView cardBookAppointment = findViewById(R.id.card_book_appointment);
@@ -120,6 +136,8 @@ public class HealthReportActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Live Location Sent to Doctor!", Toast.LENGTH_SHORT).show();
     }
+
+
 
 
     private boolean isGPSEnabled() {
@@ -222,5 +240,25 @@ public class HealthReportActivity extends AppCompatActivity {
     }
 
 
+    private void fetchHealthReports() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reportList.clear();
+                for (DataSnapshot reportSnapshot : snapshot.getChildren()) {
+                    HealthReportModel report = reportSnapshot.getValue(HealthReportModel.class);
+                    if (report != null && report.getEmail().equals(studentEmail)) {
+                        reportList.add(report);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HealthReportActivity.this, "Failed to load reports", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

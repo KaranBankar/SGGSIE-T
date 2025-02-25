@@ -103,7 +103,7 @@
 
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/notification"
+            android:id="@+id/notice"
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_margin="8dp"
@@ -129,7 +129,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notification"
+                    android:text="Publish Notice"
                     android:textSize="12sp"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"

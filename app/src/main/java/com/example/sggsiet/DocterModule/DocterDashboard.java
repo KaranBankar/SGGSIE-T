@@ -25,7 +25,7 @@ public class DocterDashboard extends AppCompatActivity implements NavigationView
 
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
-    private MaterialCardView cardAddReport, cardViewReports;
+    private MaterialCardView cardAddReport, cardViewReports,card_appointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,13 @@ public class DocterDashboard extends AppCompatActivity implements NavigationView
         // Find Cards
         cardAddReport = findViewById(R.id.cardAddReport);
         cardViewReports = findViewById(R.id.cardViewReports);
+        card_appointments=findViewById(R.id.cardViewAppointments);
+
 
         // Click Listeners
         cardAddReport.setOnClickListener(view -> startActivity(new Intent(DocterDashboard.this, AddStudentReport.class)));
         cardViewReports.setOnClickListener(view -> startActivity(new Intent(DocterDashboard.this, ViewStudentReports.class)));
+        card_appointments.setOnClickListener(view -> startActivity(new Intent(DocterDashboard.this, ViewMyAppointments.class)));
     }
 
     @Override

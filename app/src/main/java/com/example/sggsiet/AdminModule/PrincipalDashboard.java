@@ -3,6 +3,7 @@ package com.example.sggsiet.AdminModule;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,10 +47,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PrincipalDashboard extends AppCompatActivity {
-    private CardView addalldata,election,leavemodule,facility,budget,complaints,admissions,exam,notification;
+    private CardView addalldata,election,leavemodule,facility,budget,complaints,admissions,exam,notice;
     private BarChart budgetChart;
     private RecyclerView recyclerViewComplaints; // RecyclerView for complaints
     private AdminComplaintShowAdapter complaintAdapter; // Adapter for complaints
@@ -214,7 +219,7 @@ public class PrincipalDashboard extends AppCompatActivity {
             startActivity(new Intent(this,LeavesManagement.class));
         });
         budget.setOnClickListener(v->{
-            startActivity(new Intent(this,BudgetOverview.class));
+            startActivity(new Intent(this, Budget_inner.class));
         });
         complaints.setOnClickListener(v->{
             startActivity(new Intent(this,HomeComplaints.class));
@@ -222,13 +227,34 @@ public class PrincipalDashboard extends AppCompatActivity {
         admissions.setOnClickListener(v->{
             startActivity(new Intent(this,AdmissionModule.class));
         });
-        exam.setOnClickListener(v-> {
-            startActivity(new Intent(this, ExamModule.class));
+//        exam.setOnClickListener(v-> {
+//            startActivity(new Intent(this, ExamModule.class));
+//        });
+
+        notice.setOnClickListener(v -> {
+            // Create a Material Alert Dialog
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_notice, null);
+
+            // Initialize dialog views
+            TextInputEditText noticeInput = dialogView.findViewById(R.id.noticeInput);
+
+            builder.setTitle("Enter Notice")
+                    .setView(dialogView)
+                    .setPositiveButton("Submit", (dialog, which) -> {
+                        String noticeText = noticeInput.getText().toString().trim();
+
+                        if (!noticeText.isEmpty()) {
+                            // Store the notice in Firebase
+                            storeNoticeInFirebase(noticeText);
+                        } else {
+                            Toast.makeText(this, "Please enter a notice", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                    .show();
         });
 
-        notification.setOnClickListener(v->{
-            startActivity(new Intent(this,NotificationModule.class));
-        });
 
 
         final boolean[] isComplaintsVisible = {false};
@@ -258,8 +284,30 @@ public class PrincipalDashboard extends AppCompatActivity {
         recyclerViewComplaints = findViewById(R.id.complaintsRecyclerView); // Initialize RecyclerView
         viewall=findViewById(R.id.viewallcomp);
         admissions=findViewById(R.id.admissionModule);
-        exam=findViewById(R.id.notification);
-        notification=findViewById(R.id.notification);
+        notice=findViewById(R.id.notice);
 
     }
+
+    private void storeNoticeInFirebase(String noticeText) {
+        DatabaseReference noticeRef = FirebaseDatabase.getInstance().getReference("adminnotices");
+
+        // Generate a unique key for each notice
+        String noticeId = noticeRef.push().getKey();
+
+        if (noticeId != null) {
+            Map<String, Object> noticeData = new HashMap<>();
+            noticeData.put("noticeId", noticeId);
+            noticeData.put("noticeText", noticeText);
+            noticeData.put("timestamp", System.currentTimeMillis()); // Store time of notice creation
+
+            noticeRef.child(noticeId).setValue(noticeData)
+                    .addOnSuccessListener(aVoid ->
+                            Toast.makeText(this, "Notice added successfully!", Toast.LENGTH_SHORT).show()
+                    )
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Failed to add notice: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                    );
+        }
+    }
+
 }

@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class VotingActivity extends AppCompatActivity {
@@ -79,16 +80,30 @@ public class VotingActivity extends AppCompatActivity {
      * Checks if the user has already applied for a position and updates UI accordingly.
      */
     private void checkUserApplication() {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("SGGSIE&T/AppliedCandidates/" + userEnrollmentNo);
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("SGGSIE&T/AppliedCandidates/" + userEnrollmentNo);
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    appliedPosition = snapshot.getValue(String.class);
-                    showAppliedPositionUI(appliedPosition);
+                    // Since data is stored as a HashMap, retrieve position from it
+                    Object value = snapshot.getValue();
+                    if (value instanceof HashMap) {
+                        HashMap<String, Object> appliedData = (HashMap<String, Object>) value;
+
+                        // Extract position name if stored inside
+                        appliedPosition = appliedData.get("positionName") != null ?
+                                appliedData.get("positionName").toString() : null;
+                    }
+
+                    if (appliedPosition != null) {
+                        showAppliedPositionUI(appliedPosition);
+                    } else {
+                        fetchPositions(); // No valid position found, show available ones
+                    }
                 } else {
-                    fetchPositions(); // Show available positions
+                    fetchPositions();
                 }
             }
 
@@ -98,6 +113,7 @@ public class VotingActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * Fetches the list of available positions from Firebase and updates RecyclerView.

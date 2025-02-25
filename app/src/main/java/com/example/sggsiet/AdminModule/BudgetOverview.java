@@ -27,10 +27,6 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BudgetOverview extends AppCompatActivity {
 
@@ -48,7 +46,7 @@ public class BudgetOverview extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FundsAdapter adapter;
     private List<FundsSummary> fundsList;
-    private DatabaseReference fundsSummaryRef;
+    private DatabaseReference fundsSummaryRef, budgetRequestsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,47 +63,87 @@ public class BudgetOverview extends AppCompatActivity {
         adapter = new FundsAdapter(fundsList);
         recyclerView.setAdapter(adapter);
 
-        // Firebase reference
+        // Firebase references
         fundsSummaryRef = FirebaseDatabase.getInstance().getReference("FundsSummary");
+        budgetRequestsRef = FirebaseDatabase.getInstance().getReference("BudgetRequests");
 
         // Load data
         fetchFundsData();
     }
 
     private void fetchFundsData() {
-        fundsSummaryRef.addValueEventListener(new ValueEventListener() {
+        fundsSummaryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fundsList.clear();
-                List<PieEntry> pieEntries = new ArrayList<>();
-                List<BarEntry> barEntries = new ArrayList<>();
-                List<String> labels = new ArrayList<>();
-                int index = 0;
+                final Map<String, Integer> totalFundsMap = new HashMap<>();
 
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String requestType = data.getKey();
                     int totalFunds = data.child("totalFunds").getValue(Integer.class);
-
-                    fundsList.add(new FundsSummary(requestType, totalFunds));
-
-                    // Add data to PieChart & BarChart
-                    pieEntries.add(new PieEntry(totalFunds, requestType));
-                    barEntries.add(new BarEntry(index, totalFunds));
-                    labels.add(requestType);
-                    index++;
+                    totalFundsMap.put(requestType, totalFunds);
                 }
 
-                // Update UI
-                adapter.notifyDataSetChanged();
-                updatePieChart(pieEntries);
-                updateBarChart(barEntries, labels);
+                // Now fetch approved budget requests and update total funds
+                fetchApprovedBudgetRequests(totalFundsMap);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(BudgetOverview.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BudgetOverview.this, "Failed to load funds data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void fetchApprovedBudgetRequests(final Map<String, Integer> totalFundsMap) {
+        budgetRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    String requestType = data.child("requestType").getValue(String.class);
+                    String status = data.child("status").getValue(String.class);
+                    int requestAmount = Integer.parseInt(data.child("funds").getValue(String.class));
+
+                    if (status != null && status.equals("Approved")) {
+                        if (totalFundsMap.containsKey(requestType)) {
+                            totalFundsMap.put(requestType, totalFundsMap.get(requestType) + requestAmount);
+                        } else {
+                            totalFundsMap.put(requestType, requestAmount);
+                        }
+                    }
+                }
+
+                updateCharts(totalFundsMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(BudgetOverview.this, "Failed to load budget requests", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateCharts(Map<String, Integer> totalFundsMap) {
+        fundsList.clear();
+        List<PieEntry> pieEntries = new ArrayList<>();
+        List<BarEntry> barEntries = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+        int index = 0;
+
+        for (Map.Entry<String, Integer> entry : totalFundsMap.entrySet()) {
+            String category = entry.getKey();
+            int totalAmount = entry.getValue();
+
+            fundsList.add(new FundsSummary(category, totalAmount));
+            pieEntries.add(new PieEntry(totalAmount, category));
+            barEntries.add(new BarEntry(index, totalAmount));
+            labels.add(category);
+            index++;
+        }
+
+        // Update UI
+        adapter.notifyDataSetChanged();
+        updatePieChart(pieEntries);
+        updateBarChart(barEntries, labels);
     }
 
     private void updatePieChart(List<PieEntry> pieEntries) {
@@ -116,8 +154,9 @@ public class BudgetOverview extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
 
         PieData pieData = new PieData(dataSet);
-        pieChart.setData(pieData);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
 
+        pieChart.setData(pieData);
         pieChart.setUsePercentValues(true);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleRadius(40f);
@@ -127,16 +166,6 @@ public class BudgetOverview extends AppCompatActivity {
         pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.setEntryLabelTextSize(14f);
 
-        // Improved legend
-
-
-        // Set a value formatter to avoid overlapping labels
-        pieData.setValueFormatter(new PercentFormatter(pieChart));
-        pieChart.setExtraOffsets(5, 5, 5, 5); // Add extra offsets to avoid clipping
-        pieChart.setDrawEntryLabels(true); // Enable entry labels
-        pieChart.setEntryLabelTextSize(12f); // Set entry label text size
-        pieChart.setEntryLabelColor(Color.BLACK); // Set entry label color
-
         pieChart.animateY(1000);
         pieChart.invalidate(); // Refresh
     }
@@ -144,18 +173,7 @@ public class BudgetOverview extends AppCompatActivity {
     private void updateBarChart(List<BarEntry> barEntries, List<String> labels) {
         BarDataSet dataSet = new BarDataSet(barEntries, "Funds Breakdown");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(14f);
-        dataSet.setValueTextColor(Color.WHITE); // Change text color for better visibility
-        dataSet.setDrawValues(true); // Show values on top of bars
         dataSet.setValueTextSize(12f);
-
-        // Add value labels on top of the bars
-        dataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getBarLabel(BarEntry barEntry) {
-                return "₹" + (int) barEntry.getY(); // Format the value as currency
-            }
-        });
 
         BarData barData = new BarData(dataSet);
         barData.setBarWidth(0.6f);
@@ -165,9 +183,9 @@ public class BudgetOverview extends AppCompatActivity {
 
         // Set X-Axis labels
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); // Set labels
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f); // Only show integer values
+        xAxis.setGranularity(1f);
         xAxis.setTextSize(12f);
         xAxis.setTextColor(Color.BLACK);
 
@@ -175,42 +193,21 @@ public class BudgetOverview extends AppCompatActivity {
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setTextSize(12f);
         leftAxis.setTextColor(Color.BLACK);
-        leftAxis.setDrawGridLines(true); // Show grid lines for better readability
-        leftAxis.setGranularity(1f); // Only show integer values
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularity(1f);
 
-        barChart.getAxisRight().setEnabled(false); // Disable right Y-Axis
+        barChart.getAxisRight().setEnabled(false);
 
         // Legend customization
         Legend legend = barChart.getLegend();
         legend.setFormSize(12f);
-        legend.setTextSize(8f);
+        legend.setTextSize(10f);
         legend.setTextColor(Color.BLACK);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
 
         // Animate the chart
-        barChart.animateY(1000, Easing.EaseInOutQuad); // Add easing for a smoother animation
-        barChart.invalidate(); // Refresh
-
-
-        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                // Show a Toast or a custom tooltip with the value
-                String value = "₹" + (int) e.getY();
-                Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-                // Handle when nothing is selected
-            }
-        });
-
+        barChart.animateY(1000, Easing.EaseInOutQuad);
+        barChart.invalidate();
     }
-
-
-
-
 }
