@@ -286,14 +286,14 @@
                             <ImageView
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/m_health"
+                                android:src="@drawable/m_doubt"
                                 android:layout_gravity="center"
                                 app:tint="@color/green" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Health Report"
+                                android:text="Solve Doubt"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"

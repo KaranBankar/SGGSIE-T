@@ -42,11 +42,11 @@ public class AddStudentReport extends AppCompatActivity {
         complaintsRef = FirebaseDatabase.getInstance().getReference("SGGSIE&T").child("healthreports");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user != null) {
+
             csvStorageRef = FirebaseStorage.getInstance().getReference("dummy_student_data.csv");
-        } else {
+
             Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
-        }
+
 
         btnSubmitComplaint.setOnClickListener(v -> checkStudentAndSubmit());
     }

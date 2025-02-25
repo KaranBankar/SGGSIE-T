@@ -152,6 +152,19 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             android:layout_marginStart="8dp"/>
+
+
+
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/gardtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login As a Gard"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="8dp"/>
+
 
 </LinearLayout>

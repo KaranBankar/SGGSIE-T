@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.*;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.sggsiet.ImageComparator;
 import com.example.sggsiet.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -151,14 +153,42 @@ public class StudentComplaints extends AppCompatActivity {
                 selectedImageUri = data.getData();
                 ivSelectedImage.setImageURI(selectedImageUri);
                 ivSelectedImage.setVisibility(View.VISIBLE);
+                checkForVulgarContent();
             } else if (requestCode == CAPTURE_IMAGE && data != null) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 selectedImageUri = getImageUriFromBitmap(bitmap);
                 ivSelectedImage.setImageBitmap(bitmap);
                 ivSelectedImage.setVisibility(View.VISIBLE);
+                checkForVulgarContent();
             }
         }
     }
+
+    // Function to check if the selected image is vulgar
+    private void checkForVulgarContent() {
+        try {
+            Bitmap selectedBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+            ImageComparator imageComparator = new ImageComparator(this);
+
+            if (imageComparator.isVulgarImage(selectedBitmap)) {
+                showVulgarWarningDialog();
+                ivSelectedImage.setImageDrawable(null); // Reset image selection
+                selectedImageUri = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Show Warning Dialog if Image is Vulgar
+    private void showVulgarWarningDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Warning")
+                .setMessage("Vulgar content is not allowed to upload. Please select another image.")
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
 
     // ✅ Convert Bitmap to URI
     private Uri getImageUriFromBitmap(Bitmap bitmap) {
@@ -215,6 +245,8 @@ public class StudentComplaints extends AppCompatActivity {
         complaintData.put("description", description);
         complaintData.put("complaintType", complaintType);
         complaintData.put("imageUrl", imageUrl);
+        complaintData.put("status","Pending");
+        complaintData.put("resolvedText","None");
 
         databaseReference.child(complaintId).setValue(complaintData)
                 .addOnCompleteListener(task -> {

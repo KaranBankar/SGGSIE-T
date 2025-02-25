@@ -1,156 +1,213 @@
 package com.example.sggsiet.AdminModule;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sggsiet.AdminModule.Adapter.ExpenseAdapter;
+import com.example.sggsiet.AdminModule.Adapter.FundsAdapter;
+import com.example.sggsiet.AdminModule.FundsSummary;
 import com.example.sggsiet.R;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 public class BudgetOverview extends AppCompatActivity {
 
-    // Views declaration
-    private FloatingActionButton addExpenseFab;
-    private RecyclerView expenseRecyclerView;
-    private PieChart budgetUsageChart;
-    private TextView tvTotalBudget, tvRemainingBudget, tvTotalExpenses;
-    private ProgressBar progressEducation, progressInfrastructure, progressResearch;
-
-    private ExpenseAdapter adapter;
-    private List<Expense> expenseList = new ArrayList<>();
-    private double totalBudget = 50000.0;
+    private PieChart pieChart;
+    private BarChart barChart;
+    private RecyclerView recyclerView;
+    private FundsAdapter adapter;
+    private List<FundsSummary> fundsList;
+    private DatabaseReference fundsSummaryRef, budgetRequestsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_overview);
 
-        initializeViews();
-        setupRecyclerView();
-        setupFabClickListener();
-        updateBudgetDisplay();
+        // Initialize UI elements
+        pieChart = findViewById(R.id.pieChart);
+        barChart = findViewById(R.id.barChart);
+        recyclerView = findViewById(R.id.recyclerViewFunds);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        fundsList = new ArrayList<>();
+        adapter = new FundsAdapter(fundsList);
+        recyclerView.setAdapter(adapter);
+
+        // Firebase references
+        fundsSummaryRef = FirebaseDatabase.getInstance().getReference("FundsSummary");
+        budgetRequestsRef = FirebaseDatabase.getInstance().getReference("BudgetRequests");
+
+        // Load data
+        fetchFundsData();
     }
 
-    private void initializeViews() {
-        addExpenseFab = findViewById(R.id.addExpenseFab);
-        expenseRecyclerView = findViewById(R.id.expenseRecyclerView);
-        budgetUsageChart = findViewById(R.id.budgetUsageChart);
+    private void fetchFundsData() {
+        fundsSummaryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final Map<String, Integer> totalFundsMap = new HashMap<>();
 
-        // TextViews
-        tvTotalBudget = findViewById(R.id.tvTotalBudget);
-        tvRemainingBudget = findViewById(R.id.tvRemainingBudget);
-        tvTotalExpenses = findViewById(R.id.tvTotalExpenses);
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    String requestType = data.getKey();
+                    int totalFunds = data.child("totalFunds").getValue(Integer.class);
+                    totalFundsMap.put(requestType, totalFunds);
+                }
 
-        // ProgressBars
-        progressEducation = findViewById(R.id.progressEducation);
-        progressInfrastructure = findViewById(R.id.progressInfrastructure);
-        progressResearch = findViewById(R.id.progressResearch);
+                // Now fetch approved budget requests and update total funds
+                fetchApprovedBudgetRequests(totalFundsMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(BudgetOverview.this, "Failed to load funds data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void setupRecyclerView() {
-        adapter = new ExpenseAdapter(expenseList);
-        expenseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        expenseRecyclerView.setAdapter(adapter);
-    }
+    private void fetchApprovedBudgetRequests(final Map<String, Integer> totalFundsMap) {
+        budgetRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    String requestType = data.child("requestType").getValue(String.class);
+                    String status = data.child("status").getValue(String.class);
+                    int requestAmount = Integer.parseInt(data.child("funds").getValue(String.class));
 
-    private void setupFabClickListener() {
-        addExpenseFab.setOnClickListener(v -> showAddExpenseDialog());
-    }
-
-    private void showAddExpenseDialog() {
-        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_expense, null);
-
-        TextInputEditText etCategory = dialogView.findViewById(R.id.etCategory);
-        TextInputEditText etAmount = dialogView.findViewById(R.id.etAmount);
-        TextInputEditText etDate = dialogView.findViewById(R.id.etDate);
-
-        setupDatePicker(etDate);
-
-        dialogBuilder.setView(dialogView)
-                .setTitle("Add New Expense")
-                .setPositiveButton("Save", (dialog, which) -> {
-                    String category = etCategory.getText().toString().trim();
-                    String amountStr = etAmount.getText().toString().trim();
-                    String date = etDate.getText().toString().trim();
-
-                    if (validateInput(category, amountStr, date)) {
-                        try {
-                            double amount = Double.parseDouble(amountStr);
-                            addNewExpense(new Expense(category, amount, date));
-                        } catch (NumberFormatException e) {
-                            showToast("Invalid amount format");
+                    if (status != null && status.equals("Approved")) {
+                        if (totalFundsMap.containsKey(requestType)) {
+                            totalFundsMap.put(requestType, totalFundsMap.get(requestType) + requestAmount);
+                        } else {
+                            totalFundsMap.put(requestType, requestAmount);
                         }
                     }
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
+                }
 
-    private void setupDatePicker(TextInputEditText etDate) {
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker().build();
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            etDate.setText(sdf.format(new Date(selection)));
+                updateCharts(totalFundsMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(BudgetOverview.this, "Failed to load budget requests", Toast.LENGTH_SHORT).show();
+            }
         });
-        etDate.setOnClickListener(v -> datePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
     }
 
-    private boolean validateInput(String category, String amount, String date) {
-        if (category.isEmpty()) return showToast("Please enter category");
-        if (amount.isEmpty()) return showToast("Please enter amount");
-        if (date.isEmpty()) return showToast("Please select date");
-        return true;
-    }
+    private void updateCharts(Map<String, Integer> totalFundsMap) {
+        fundsList.clear();
+        List<PieEntry> pieEntries = new ArrayList<>();
+        List<BarEntry> barEntries = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+        int index = 0;
 
-    private boolean showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        return false;
-    }
+        for (Map.Entry<String, Integer> entry : totalFundsMap.entrySet()) {
+            String category = entry.getKey();
+            int totalAmount = entry.getValue();
 
-    private void addNewExpense(Expense expense) {
-        expenseList.add(expense);
-        adapter.notifyDataSetChanged();
-        updateBudgetDisplay();
-    }
-
-    private void updateBudgetDisplay() {
-        double totalSpent = calculateTotalSpent();
-        double remaining = totalBudget - totalSpent;
-
-        tvTotalBudget.setText(String.format("₹%.2f", totalBudget));
-        tvTotalExpenses.setText(String.format("₹%.2f", totalSpent));
-        tvRemainingBudget.setText(String.format("₹%.2f", remaining));
-
-        // Update progress bars (example static values)
-        progressEducation.setProgress(70);
-        progressInfrastructure.setProgress(50);
-        progressResearch.setProgress(60);
-    }
-
-    private double calculateTotalSpent() {
-        double total = 0;
-        for (Expense expense : expenseList) {
-            total += expense.getAmount();
+            fundsList.add(new FundsSummary(category, totalAmount));
+            pieEntries.add(new PieEntry(totalAmount, category));
+            barEntries.add(new BarEntry(index, totalAmount));
+            labels.add(category);
+            index++;
         }
-        return total;
+
+        // Update UI
+        adapter.notifyDataSetChanged();
+        updatePieChart(pieEntries);
+        updateBarChart(barEntries, labels);
+    }
+
+    private void updatePieChart(List<PieEntry> pieEntries) {
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Funds Distribution");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextSize(16f);
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setSliceSpace(3f);
+
+        PieData pieData = new PieData(dataSet);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
+
+        pieChart.setData(pieData);
+        pieChart.setUsePercentValues(true);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleRadius(40f);
+        pieChart.setTransparentCircleRadius(50f);
+        pieChart.setCenterText("Funds Overview");
+        pieChart.setCenterTextSize(12f);
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelTextSize(14f);
+
+        pieChart.animateY(1000);
+        pieChart.invalidate(); // Refresh
+    }
+
+    private void updateBarChart(List<BarEntry> barEntries, List<String> labels) {
+        BarDataSet dataSet = new BarDataSet(barEntries, "Funds Breakdown");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextSize(12f);
+
+        BarData barData = new BarData(dataSet);
+        barData.setBarWidth(0.6f);
+
+        barChart.setData(barData);
+        barChart.getDescription().setEnabled(false);
+
+        // Set X-Axis labels
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setTextSize(12f);
+        xAxis.setTextColor(Color.BLACK);
+
+        // Y-Axis settings
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setTextSize(12f);
+        leftAxis.setTextColor(Color.BLACK);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularity(1f);
+
+        barChart.getAxisRight().setEnabled(false);
+
+        // Legend customization
+        Legend legend = barChart.getLegend();
+        legend.setFormSize(12f);
+        legend.setTextSize(10f);
+        legend.setTextColor(Color.BLACK);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
+        // Animate the chart
+        barChart.animateY(1000, Easing.EaseInOutQuad);
+        barChart.invalidate();
     }
 }

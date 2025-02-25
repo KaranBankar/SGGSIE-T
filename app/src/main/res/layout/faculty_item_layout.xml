@@ -2,17 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="12dp"
 
-    android:elevation="6dp"
-    >
+    android:backgroundTint="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginTop="10dp"
+        android:padding="16dp"
+        android:background="@color/light_gray">
 
         <!-- Faculty Name -->
         <TextView
@@ -20,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dr. John Doe"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/black"
+            android:paddingBottom="4dp" />
 
         <!-- Faculty Email -->
         <TextView
@@ -31,8 +34,10 @@
             android:layout_height="wrap_content"
             android:text="johndoe@college.edu"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
+            android:textColor="@color/black"
+            android:drawableLeft="@drawable/mail"
+            android:drawablePadding="6dp"
+            android:paddingBottom="2dp" />
 
         <!-- Faculty Mobile -->
         <TextView
@@ -41,8 +46,10 @@
             android:layout_height="wrap_content"
             android:text="9322067937"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
+            android:textColor="@color/gray_text"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="6dp"
+            android:paddingBottom="2dp" />
 
         <!-- Faculty Department -->
         <TextView
@@ -51,9 +58,9 @@
             android:layout_height="wrap_content"
             android:text="Department: Computer Science"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="6dp"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
 
         <!-- Faculty Position -->
         <TextView
@@ -62,22 +69,25 @@
             android:layout_height="wrap_content"
             android:text="Position: Professor"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="2dp"
-            android:textStyle="italic" />
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            android:paddingBottom="6dp" />
 
         <!-- Ask Doubt Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/askDoubtBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ask Doubt"
             android:textAllCaps="false"
             android:textSize="16sp"
-            android:backgroundTint="@color/teal_700"
+            app:cornerRadius="50dp"
+            android:background="@drawable/gradient_bg_red"
+
             android:textColor="@android:color/white"
             android:layout_marginTop="10dp"
-            android:padding="8dp" />
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="24dp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

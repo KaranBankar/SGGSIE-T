@@ -5,113 +5,274 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white"
-   >
+
+    android:background="@color/white">
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="3"
+        android:padding="16dp"
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <!-- Card Item Template -->
+        <!-- Election Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/electionscreen"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/background_blue"
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/election"
-                    style="@style/CardIconStyle" />
+                    app:tint="@color/teal_700" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Election"
-                    style="@style/CardTextStyle" />
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#3F51B5"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Complaint Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/complainmodule"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_blue"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/complain"
-                    style="@style/CardIconStyle" />
+                    app:tint="@color/red" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Complaint"
-                    style="@style/CardTextStyle" />
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/red"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Budget Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/budgetmodule"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/background_blue"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/budget"
-                    style="@style/CardIconStyle" />
+                    app:tint="#00BCD4" />
 
                 <TextView
-                    android:text="Budget"
-                    style="@style/CardTextStyle" />
+                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budget"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#00BCD4"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Add Data Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/addalldata"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/background_blue"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/adddata"
-                    style="@style/CardIconStyle" />
+                    app:tint="@color/ios_blue" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Add Data"
-                    style="@style/CardTextStyle" />
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/ios_blue"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Leave Requests Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/leavemodule"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/background_blue"
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/leavereq"
-                    style="@style/CardIconStyle" />
+                    app:tint="@color/red" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Leave Requests"
-                    style="@style/CardTextStyle" />
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/red"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Facility Usage Module -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/facilitymodule"
-            style="@style/ModuleCardStyle"
-            android:layout_columnWeight="1">
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            android:layout_columnWeight="1"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@android:color/white">
 
-            <LinearLayout style="@style/CardContentStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/background_blue"
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/facility"
-                    style="@style/CardIconStyle" />
+                    app:tint="@color/green" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Facility Usage"
-                    style="@style/CardTextStyle" />
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/green"
+                android:layout_gravity="bottom"/>
+
         </com.google.android.material.card.MaterialCardView>
 
     </GridLayout>
