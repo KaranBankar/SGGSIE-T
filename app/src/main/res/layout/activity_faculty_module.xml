@@ -106,30 +106,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notice"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                android:layout_margin="10dp"/>
-
-
-            <!-- Explore Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Explore"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginBottom="8dp" />
+
 
             <!-- Cards Section -->
             <LinearLayout
@@ -172,7 +156,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Events"
+                                android:text="Approve Events"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"
@@ -218,7 +202,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Complaint"
+                                android:text="View Complents"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"
@@ -263,7 +247,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Elections"
+                                android:text="Conduct Elections"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"
@@ -399,7 +383,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Leave"
+                                android:text="Approve Leaves"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"

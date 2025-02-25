@@ -6,18 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FacultyModule.FacultyHealthReportActivity">
+    tools:context=".FacultyModule.FacultyLeaveApprovalActivity">
+
+    <!-- Title for the Activity -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Students Health Reports"
+        android:text="Leave Approval Requests"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_margin="16dp" />
 
+    <!-- RecyclerView to display leave requests -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
 </LinearLayout>

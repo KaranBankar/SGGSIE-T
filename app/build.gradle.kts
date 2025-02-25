@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.sggsiet"
     compileSdk = 35
 
@@ -35,38 +36,55 @@ android {
         jvmTarget = "11"
     }
 
-    buildFeatures{
-        viewBinding=true
+    buildFeatures {
+        viewBinding = true
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{LICENSE.md,NOTICE.md}"
+        }
+    }
+
+    dependencies {
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.appcompat)
+        implementation(libs.material)
+        implementation(libs.androidx.activity)
+        implementation(libs.androidx.constraintlayout)
+        implementation(libs.firebase.database)
+        implementation(libs.firebase.auth)
+        implementation(libs.firebase.firestore.ktx)
+
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.androidx.junit)
+        androidTestImplementation(libs.androidx.espresso.core)
+
+        // Import the Firebase BoM
+        implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+
+        implementation("com.google.android.material:material:1.9.0")
+
+        // Firebase Dependencies (Add More If Needed)
+        implementation("com.google.firebase:firebase-analytics")
+
+        // Circle ImageView Library
+        implementation("de.hdodenhof:circleimageview:3.1.0")
+
+        // MPAndroidChart Library (Fixed Version Format)
+        implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
+        implementation("com.google.firebase:firebase-storage:19.2.2")
+        implementation("com.google.android.flexbox:flexbox:3.0.0")
+        implementation("com.github.bumptech.glide:glide:4.16.0")
+
+        implementation("com.sun.mail:android-mail:1.6.7")
+        implementation("com.sun.mail:android-activation:1.6.7")
+
     }
 }
-
 dependencies {
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.auth)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
-
-    implementation ("com.google.android.material:material:1.9.0")
-
-    // Firebase Dependencies (Add More If Needed)
-    implementation("com.google.firebase:firebase-analytics")
-
-    // Circle ImageView Library
-    implementation("de.hdodenhof:circleimageview:3.1.0")
-
-    // MPAndroidChart Library (Fixed Version Format)
-    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
-    implementation("com.google.firebase:firebase-storage:19.2.2")
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

@@ -19,8 +19,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.sggsiet.FacultyModule.AproveEvents
 import com.example.sggsiet.FacultyModule.FacultyCheatRecordsActivity
+import com.example.sggsiet.FacultyModule.FacultyComplainRecordActivity
 import com.example.sggsiet.FacultyModule.FacultyHealthReportActivity
-import com.example.sggsiet.FacultyModule.FacultyLeaveApplicationActivity
+import com.example.sggsiet.FacultyModule.FacultyLeaveApprovalActivity
 import com.example.sggsiet.FacultyModule.SolveDoubt
 import com.example.sggsiet.databinding.ActivityFacultyModuleBinding
 import com.example.sggsiet.dataclasses.CheatRecord
@@ -79,17 +80,22 @@ class FacultyModuleActivity : AppCompatActivity() {
         }
 
         binding.healthReport.setOnClickListener{
-            val i = Intent(this, SolveDoubt::class.java)
+            val i = Intent(this, FacultyHealthReportActivity::class.java)
             startActivity(i)
         }
 
         binding.leaveApplication.setOnClickListener{
-            val i = Intent(this, FacultyLeaveApplicationActivity::class.java)
+            val i = Intent(this, FacultyLeaveApprovalActivity::class.java)
             startActivity(i)
         }
 
         binding.ElectionConduct.setOnClickListener{
             val i = Intent(this, DisplayElectionPositions::class.java)
+            startActivity(i)
+        }
+
+        binding.cardComplains.setOnClickListener{
+            val i = Intent(this, FacultyComplainRecordActivity::class.java)
             startActivity(i)
         }
     }
