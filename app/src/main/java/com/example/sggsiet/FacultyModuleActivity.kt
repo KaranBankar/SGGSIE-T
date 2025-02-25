@@ -23,6 +23,7 @@ import com.example.sggsiet.FacultyModule.FacultyComplainRecordActivity
 import com.example.sggsiet.FacultyModule.FacultyHealthReportActivity
 import com.example.sggsiet.FacultyModule.FacultyLeaveApprovalActivity
 import com.example.sggsiet.FacultyModule.SolveDoubt
+import com.example.sggsiet.StudentModule.NoticeActivity
 import com.example.sggsiet.databinding.ActivityFacultyModuleBinding
 import com.example.sggsiet.dataclasses.CheatRecord
 import com.google.firebase.FirebaseApp
@@ -80,7 +81,7 @@ class FacultyModuleActivity : AppCompatActivity() {
         }
 
         binding.healthReport.setOnClickListener{
-            val i = Intent(this, FacultyHealthReportActivity::class.java)
+            val i = Intent(this, SolveDoubt::class.java)
             startActivity(i)
         }
 
@@ -96,6 +97,17 @@ class FacultyModuleActivity : AppCompatActivity() {
 
         binding.cardComplains.setOnClickListener{
             val i = Intent(this, FacultyComplainRecordActivity::class.java)
+            startActivity(i)
+        }
+
+        binding.noticecard.setOnClickListener{
+            val i = Intent(this, NoticeActivity::class.java)
+            startActivity(i)
+        }
+
+
+        binding.healthoricard.setOnClickListener{
+            val i = Intent(this, FacultyHealthReportActivity::class.java)
             startActivity(i)
         }
     }
@@ -200,12 +212,64 @@ class FacultyModuleActivity : AppCompatActivity() {
     private fun setupNavigationDrawer() {
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                // Handle navigation drawer item clicks here
+                R.id.nav_home -> {
+                    // Navigate to HomeActivity (Replace with your actual activity)
+                    val intent = Intent(this, FacultyModuleActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_feedback -> {
+                    // Navigate to FeedbackActivity (Replace with your actual activity)
+
+                }
+                R.id.nav_share -> {
+                    // Share App Link
+                    shareApp()
+                }
+                R.id.nav_logout -> {
+                    // Handle Logout
+                    logoutUser()
+                }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
     }
+
+    private fun shareApp() {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Check out this amazing app!")
+            putExtra(Intent.EXTRA_TEXT, "Download the app from: https://play.google.com/store/apps/details?id=com.example.yourapp")
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share via"))
+    }
+
+    private fun logoutUser() {
+        // Clear SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()  // Clears all stored data
+        editor.apply()
+
+        // Show logout message
+        Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show()
+
+        // Redirect to Login Activity (Replace with your actual login activity)
+        val intent = Intent(this, Login::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()  // Close current activity
+    }
+
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
 
     companion object {
         private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 100
