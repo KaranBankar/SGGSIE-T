@@ -1,6 +1,7 @@
 package com.example.sggsiet.FacultyModule
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -69,6 +70,8 @@ class FacultyComplainRecordActivity : AppCompatActivity() {
                     val resolvedComplaint = resolvedSnapshot.getValue(Complaint::class.java)
                     resolvedComplaint?.let { complaintList.add(it) }
                 }
+                Toast.makeText(this,"Failed", Toast.LENGTH_SHORT).show();
+
                 complaintAdapter.notifyDataSetChanged()
             }
 
