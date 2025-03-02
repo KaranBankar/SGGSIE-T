@@ -74,6 +74,7 @@ class FacultyCheatRecordsActivity : AppCompatActivity() {
                 dialog.dismiss()
             } else {
                 Toast.makeText(this, "Please fill all fields and upload an image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Failed",Toast.LENGTH_SHORT).show();
             }
         }
 
