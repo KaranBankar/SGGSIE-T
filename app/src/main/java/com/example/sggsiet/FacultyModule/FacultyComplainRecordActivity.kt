@@ -43,6 +43,7 @@ class FacultyComplainRecordActivity : AppCompatActivity() {
 
         // Fetch complaints and resolved complaints
         fetchComplaints()
+        Toast.makeText(this,"Data Fetching", Toast.LENGTH_SHORT).show();
        // fetchResolvedComplaints()
     }
 
@@ -70,7 +71,6 @@ class FacultyComplainRecordActivity : AppCompatActivity() {
                     val resolvedComplaint = resolvedSnapshot.getValue(Complaint::class.java)
                     resolvedComplaint?.let { complaintList.add(it) }
                 }
-                Toast.makeText(this,"Failed", Toast.LENGTH_SHORT).show();
 
                 complaintAdapter.notifyDataSetChanged()
             }
